@@ -1,0 +1,18 @@
+body {
+    background-color: lightblue;
+}
+
+p {
+    color: navy;
+    margin-left: 0px;
+    color: black;
+}
+
+body {
+font-size: 10pt;
+font-family: arial;
+}
+
+td {
+border-bottom: 1px solid #999999;
+}
