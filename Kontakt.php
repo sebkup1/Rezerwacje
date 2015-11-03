@@ -1,11 +1,15 @@
+<?PHP
+session_start();
+if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
+	header ("Location: login3.php");
+}
 
-
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
 <html>
 
 <head>
-<title>Logowanie</title>
+<title>Kontakt</title>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 <link rel="stylesheet" type="text/css" href="myStyle.css">
 <style type="text/css">
@@ -48,24 +52,8 @@
 <br>
 <br>
 
-</td >
-<td width="70%" >
-   
-   <FORM NAME ="form1" METHOD ="POST" ACTION ="login.php">
-
-Username: <INPUT TYPE = 'TEXT' Name ='username'  value="<?PHP print $uname;?>" maxlength="20">
-Password: <INPUT TYPE = 'TEXT' Name ='password'  value="<?PHP print $pword;?>" maxlength="16">
-
-<P align = center>
-<INPUT TYPE = "Submit" Name = "Submit1"  VALUE = "Login">
-</P>
-
-</FORM>
-
-<P>
-<?PHP print $errorMessage;?>
-    
 </td>
+<td width="70%"><small>tresc Zakładka.html</small></td>
 </tr>
 <tr>
 <td width="100%" colspan="2">
