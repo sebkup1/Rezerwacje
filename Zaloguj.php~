@@ -19,14 +19,6 @@ function quote_smart($value, $handle) {
    return $value;
 }
 
-session_start();
-if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
-	$is_logged = "niezalogowany";
-}
-else{
-	$is_logged = "zalogowany";
-}
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	$uname = $_POST['username'];
 	$pword = $_POST['password'];
@@ -108,17 +100,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <center>
 <table border="0" style="border-collapse: collapse;" width="800px" >
 <tr>
-<td width="100%" colspan="3">
+<td width="100%" colspan="2">
 
 
 <script type="text/javascript" src="logo.js"></script>
+
 <br>
 <br>
 <br>
 </td>
 </tr>
 <tr>
-<td width="20%">
+<td width="30%">
 
 
 <script type="text/javascript" src="menu.js"></script>
@@ -138,18 +131,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <br>
 
 </td >
-<td width="70%" valign = "top">
+<td width="70%" >
    
    <FORM NAME ="form1" METHOD ="POST" ACTION ="Zaloguj.php">
-		<br>
-		<br>
-		Username: <INPUT TYPE = 'TEXT' Name ='username'   maxlength="20">
-		<br>
-      	Password: <INPUT TYPE = 'TEXT' Name ='password'   maxlength="16">
 
-      	<P align = center>
+	  Username: <INPUT TYPE = 'TEXT' Name ='username'   maxlength="20">
+      Password: <INPUT TYPE = 'TEXT' Name ='password'   maxlength="16">
+
+      <P align = center>
 		 <INPUT TYPE = "Submit" Name = "Submit1"  VALUE = "Login">
-     	</P>
+      </P>
 
    </FORM>
 
@@ -157,14 +148,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <?PHP print $errorMessage;?>
     
 </td>
-
-<td width="10%" valign = "top">
-	<p><?PHP print $is_logged;?></p>
-</td>
-
 </tr>
 <tr>
-<td width="100%" colspan="3">
+<td width="100%" colspan="2">
 
 
 <script type="text/javascript" src="stopka.js"></script>

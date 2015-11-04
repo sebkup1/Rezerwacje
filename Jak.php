@@ -1,10 +1,10 @@
 <?PHP
 session_start();
 if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
-	$is_logged = "zalogowany";
+	$is_logged = "niezalogowany";
 }
 else{
-	$is_logged = "niezalogowany";
+	$is_logged = "zalogowany";
 }
 
 ?>
@@ -12,7 +12,7 @@ else{
 <html>
 
 <head>
-<title>Rezerwacje</title>
+<title>Jak działa rezerwacja</title>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 <link rel="stylesheet" type="text/css" href="myStyle.css">
 <style type="text/css">
@@ -25,23 +25,23 @@ else{
 <center>
 <table border="0" style="border-collapse: collapse;" width="800px" >
 <tr>
-<td width="100%" colspan="2">
+<td width="100%" colspan="3">
 
 
 <script type="text/javascript" src="logo.js"></script>
 
+
 <br>
 <br>
 <br>
 </td>
 </tr>
 <tr>
-<td width="30%">
+<td width="20%">
 
 
 <script type="text/javascript" src="menu.js"></script>
 
-
 <br>
 <br>
 <br>
@@ -56,26 +56,13 @@ else{
 <br>
 
 </td>
-<td width="70%" valign="top" >
-    <table>
-        <tr>
-            <br>
-            <td><p>Witamy na stronie umożliwiającej zarezerwowanie miejsca
-            parkingowego przy wydziale Mechatroniki Politechniki Warszawskiej.</p>
-            <p>
-                Jeżeli chcesz dowiedzieć się w jaki sposób zalogować się i zarezerwować miejsce
-                przejdź do zakładki Jak działa rezerwacje.
-            </p></td>
-        </tr>
-        <tr>
-            
-        </tr>
-    </table>
-    
+<td width="70%"><small>tresc Zakładka2.html</small></td>
+<td width="10%" valign = "top">
+	<p><?PHP print $is_logged;?></p>
 </td>
 </tr>
 <tr>
-<td width="100%" colspan="2">
+<td width="100%" colspan="3">
 
 
 <script type="text/javascript" src="stopka.js"></script>
@@ -83,6 +70,7 @@ else{
 
 
 </td>
+
 </tr>
 </table>
 </center>

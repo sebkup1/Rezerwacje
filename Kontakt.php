@@ -1,7 +1,10 @@
 <?PHP
 session_start();
 if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
-	header ("Location: login3.php");
+	$is_logged = "niezalogowany";
+}
+else{
+	$is_logged = "zalogowany";
 }
 
 ?>
@@ -22,7 +25,7 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 <center>
 <table border="0" style="border-collapse: collapse;" width="800px" >
 <tr>
-<td width="100%" colspan="2">
+<td width="100%" colspan="3">
 
 
 <script type="text/javascript" src="logo.js"></script>
@@ -33,7 +36,7 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 </td>
 </tr>
 <tr>
-<td width="30%">
+<td width="20%">
 
 
 <script type="text/javascript" src="menu.js"></script>
@@ -54,9 +57,14 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 
 </td>
 <td width="70%"><small>tresc Zakładka.html</small></td>
+
+<td width="10%" valign = "top">
+	<p><?PHP print $is_logged;?></p>
+</td>
+
 </tr>
 <tr>
-<td width="100%" colspan="2">
+<td width="100%" colspan="3">
 
 
 <script type="text/javascript" src="stopka.js"></script>
