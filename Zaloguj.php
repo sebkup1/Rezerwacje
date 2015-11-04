@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	$uname = $_POST['username'];
 	$pword = $_POST['password'];
 	  
-	$uname = htmlspecialchars($uname);
+	//$uname = htmlspecialchars($uname);
 	$pword = htmlspecialchars($pword);
 	  
 	//=========e=================================
@@ -150,6 +150,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
       	<P align = center>
 		 <INPUT TYPE = "Submit" Name = "Submit1"  VALUE = "Login">
      	</P>
+		
+		<A HREF = NewUser.php>Zarejestruj się</A>
 
    </FORM>
 
