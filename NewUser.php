@@ -36,11 +36,13 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 	$is_logged = "niezalogowany";
 	$on_button = "Zaloguj";
 	$to_page = "Zaloguj.php";
+	
 }
 else{
-	$is_logged = "zalogowany";
+	$is_logged = "zalogowany jako ";
 	$on_button = "Wyloguj";
 	$to_page = "logOut.php";
+	header ("Location: Zarezerwuj.php");
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -130,10 +132,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 				  'Kaminski',
 				  'Ferrari',
 				   $uname,
-				  '$pword',
+				   $pword,
 				  '3245333',
 				  '1');";
-
 			$result = mysql_query($SQL);
 
 			mysql_close($db_handle);
@@ -145,6 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			session_start();
 			$_SESSION['login'] = "1";
+			$_SESSION['user'] = $uname;
 
 			header ("Location: index.php");
 
@@ -229,10 +231,9 @@ Password: <INPUT TYPE = 'TEXT' Name ='password'  value="<?PHP print $pword;?>" m
 </td>
 
 <td width="10%" valign = "top">
-	<p><?PHP print $is_logged;?>
-	<A HREF = logOut.php>Wyloguj się</A>
+	<p><?PHP print $is_logged.' '.$_SESSION['user'];?>
 	<?php
-		print '<form action="Zaloguj.php">
+		print '<form action='.$to_page.'>
 				<input type="submit" value='.$on_button.'>
 				</form>'; //przycisk
 	?>

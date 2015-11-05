@@ -22,16 +22,29 @@ function quote_smart($value, $handle) {
 session_start();
 if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 	$is_logged = "niezalogowany";
+	$on_button = "Zaloguj";
+	$to_page = "Zaloguj.php";
+
 }
 else{
-	$is_logged = "zalogowany";
+	$is_logged = "zalogowany jako ";
+	$on_button = "Wyloguj";
+	$to_page = "logOut.php";
+	header ("Location: Zarezerwuj.php");
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+   
+   if ((isset($_SESSION['login']) && $_SESSION['login'] != '')) {
+
+    header ("Location: Zarezerwuj.php");
+}
+   
+   
+   
 	$uname = $_POST['username'];
 	$pword = $_POST['password'];
 	  
-	//$uname = htmlspecialchars($uname);
 	$pword = htmlspecialchars($pword);
 	  
 	//=========e=================================
@@ -51,7 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		$pword = quote_smart($pword, $db_handle);
 
 		$SQL = "SELECT * FROM Rejestracje.Osoba WHERE Login = $uname AND Haslo = $pword";//md5($pword)
-		//$SQL = "INSERT INTO TIBI.Logs (`LogText`) VALUES('test');";
 		$result = mysql_query($SQL);
 		$num_rows = mysql_num_rows($result);
 
@@ -61,17 +73,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		if ($result) {
 			if ($num_rows > 0) {
-			   //print $num_rows;
 			   
 				session_start();
 				$_SESSION['login'] = "1";
-				header ("Location: index.php");
+				$_SESSION['user'] = $uname;
+				header ("Location: Zarezerwuj.php");
 			}
 			else {
-			   //print "else";
-			   //print $num_rows;
+			    
 				session_start();
 				$_SESSION['login'] = "";
+				$_SESSION['user'] = "";
+				
+				$SQL = "SELECT * FROM Rejestracje.Osoba WHERE Login = $uname";//md5($pword)
+			    $result = mysql_query($SQL);
+			    $num_rows = mysql_num_rows($result);
+				
+			   if ($result) {
+				  if ($num_rows > 0) {
+					 $errorMessage = "Błędne hasło dla tego użytkownika";
+				  }else{
+					 $errorMessage = "Podany login nie istnieje";
+				  }
+			   }
 				//header ("Location: signup.php");
 			}	
 		}
@@ -146,17 +170,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		Username: <INPUT TYPE = 'TEXT' Name ='username'   maxlength="20">
 		<br>
       	Password: <INPUT TYPE = 'TEXT' Name ='password'   maxlength="16">
-
+		 
       	<P align = center>
 		 <INPUT TYPE = "Submit" Name = "Submit1"  VALUE = "Login">
      	</P>
+		<p style = "color:#FF0000"><?PHP print $errorMessage;?><br></p>
 		
-		<A HREF = NewUser.php>Zarejestruj się</A>
+		Jeżeli nie posiadasz konta w serwisie <A HREF = NewUser.php>Zarejestruj się</A>
 
    </FORM>
 
 <P>
-<?PHP print $errorMessage;?>
+
     
 </td>
 
@@ -170,7 +195,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
 <script type="text/javascript" src="stopka.js"></script>
-
 
 
 </td>

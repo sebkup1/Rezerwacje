@@ -60,12 +60,12 @@ else{
     <table>
         <tr>
             <br>
-            <td><p>Witamy na stronie umożliwiającej zarezerwowanie miejsca
-            parkingowego przy wydziale Mechatroniki Politechniki Warszawskiej.</p>
+            <td><p>Witamy na stronie umożliwiającej zarezerwowanie możliwości wjazdu na 
+            parking przy wydziale Mechatroniki Politechniki Warszawskiej.</p>
             <p>
-                Jeżeli chcesz dowiedzieć się w jaki sposób zalogować się i zarezerwować miejsce
-                przejdź do zakładki Jak działa rezerwacje.
-            </p></td>
+				<a href=Zaloguj.php>Zaloguj się</a> lub <a href=NewUser.php>Zarejestruj</a> aby móc uzyskać
+				kod pozwalający na wjazd na parking wskazanym samochodem.
+            </p>
         </tr>
         <tr>
             
@@ -75,7 +75,7 @@ else{
 </td>
 
 <td width="10%" valign = "top">
-	<p><?PHP print $is_logged;?></p>
+	
 </td>
 
 </tr>

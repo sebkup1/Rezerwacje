@@ -2,9 +2,14 @@
 session_start();
 if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 	$is_logged = "niezalogowany";
+	$on_button = "Zaloguj";
+	$to_page = "Zaloguj.php";
+	
 }
 else{
-	$is_logged = "zalogowany";
+	$is_logged = "zalogowany jako ";
+	$on_button = "Wyloguj";
+	$to_page = "logOut.php";
 }
 
 ?>
@@ -58,7 +63,12 @@ else{
 </td>
 <td width="70%"><small>tresc Zakładka2.html</small></td>
 <td width="10%" valign = "top">
-	<p><?PHP print $is_logged;?></p>
+	<p><?PHP print $is_logged.' '.$_SESSION['user'];?>
+	<?php
+		print '<form action='.$to_page.'>
+				<input type="submit" value='.$on_button.'>
+				</form>'; //przycisk
+	?></p>
 </td>
 </tr>
 <tr>
