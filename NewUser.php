@@ -34,9 +34,13 @@ function quote_smart($value, $handle) {
 session_start();
 if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 	$is_logged = "niezalogowany";
+	$on_button = "Zaloguj";
+	$to_page = "Zaloguj.php";
 }
 else{
 	$is_logged = "zalogowany";
+	$on_button = "Wyloguj";
+	$to_page = "logOut.php";
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -142,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			session_start();
 			$_SESSION['login'] = "1";
 
-			//header ("Location: page1.php");
+			header ("Location: index.php");
 
 		}
 
@@ -162,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <html>
 
 <head>
-<title>Logowanie</title>
+<title>Nowy</title>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 <link rel="stylesheet" type="text/css" href="myStyle.css">
 <style type="text/css">
@@ -227,6 +231,11 @@ Password: <INPUT TYPE = 'TEXT' Name ='password'  value="<?PHP print $pword;?>" m
 <td width="10%" valign = "top">
 	<p><?PHP print $is_logged;?>
 	<A HREF = logOut.php>Wyloguj się</A>
+	<?php
+		print '<form action="Zaloguj.php">
+				<input type="submit" value='.$on_button.'>
+				</form>'; //przycisk
+	?>
 	</p>
 </td>
 

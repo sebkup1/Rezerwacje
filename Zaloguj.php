@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			   
 				session_start();
 				$_SESSION['login'] = "1";
-				//header ("Location: page1.php");
+				header ("Location: index.php");
 			}
 			else {
 			   //print "else";
