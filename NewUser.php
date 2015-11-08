@@ -43,6 +43,11 @@ else{
 	$on_button = "Wyloguj";
 	$to_page = "logOut.php";
 	header ("Location: Zarezerwuj.php");
+	/*$is_logged = "niezalogowany";
+	$on_button = "Zaloguj";
+	$to_page = "Zaloguj.php";
+	*/
+	//session_destroy();
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -69,14 +74,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		$errorMessage = "";
 	}
 	else {
-		$errorMessage = $errorMessage . "Username must be between 10 and 20 characters" . "<BR>";
+		$errorMessage = $errorMessage . "Nazwa użytkownika musi się miescić między 10 a 20 znakami" . "<BR>";
 	}
 
 	if ($pLength >= 8 && $pLength <= 16) {
 		$errorMessage = "";
 	}
 	else {
-		$errorMessage = $errorMessage . "Password must be between 8 and 16 characters" . "<BR>";
+		$errorMessage = $errorMessage . "Hasło musi się mieścic między 8 a 16 znakami" . "<BR>";
 	}
 
 
@@ -111,12 +116,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		$num_rows = mysql_num_rows($result);
 
 		if ($num_rows > 0) {
-			$errorMessage = "Username already taken";
+			$errorMessage = "Wpisana nazwa użytkownika widnieje już w naszej bazie. Proszę wpisac inną.";
 		}
 		
 		else {
 
-			//$SQL = "INSERT INTO login (L1, L2) VALUES ($uname, md5($pword
 			$SQL = "INSERT INTO `Rejestracje`.`Osoba`
 				  (
 				  `Imie`,
@@ -128,9 +132,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 				  `uprawniony`)
 				  VALUES
 				  (
-				  'Michal',
-				  'Kaminski',
-				  'Ferrari',
+				  'sImie',
+				  'sNazwisko',
+				  'sSamochód',
 				   $uname,
 				   $pword,
 				  '3245333',
@@ -146,6 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			session_start();
 			$_SESSION['login'] = "1";
+			
 			$_SESSION['user'] = $uname;
 
 			header ("Location: index.php");
@@ -224,14 +229,12 @@ Password: <INPUT TYPE = 'TEXT' Name ='password'  value="<?PHP print $pword;?>" m
 <INPUT TYPE = "Submit" Name = "Submit1"  VALUE = "Register">
 
 </FORM>
-<P>
-
-<?PHP print $errorMessage;?>
+<p style = "color:#FF0000"><?PHP print $errorMessage;?></p>
     
 </td>
 
 <td width="10%" valign = "top">
-	<p><?PHP print $is_logged.' '.$_SESSION['user'];?>
+	<p><?PHP print $is_logged;?>
 	<?php
 		print '<form action='.$to_page.'>
 				<input type="submit" value='.$on_button.'>

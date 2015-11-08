@@ -8,15 +8,29 @@ if (!$connection) {  die('Not connected : ' . mysql_error());}
 
 // Set the active MySQL database
 
-$db_selected = mysql_select_db($database, $connection);
+$db_selected = mysql_select_db("Rejestracje", $connection);
 if (!$db_selected) {
   die ('Can\'t use db : ' . mysql_error());
 }
 
 // Select all the rows in the markers table
 
-$query = "INSERT INTO TIBI.Logs (`LogText`) VALUES('".$lat."');";
+//$query = "INSERT INTO TIBI.Logs (`LogText`) VALUES('".$lat."');";
 
+$query = "INSERT INTO `Rejestracje`.`Samochod`
+(
+`nrRej`,
+`wlasciciel`,
+`marka`,
+`model`,
+`Zidentyfikowany`)
+VALUES
+(
+'wra454354',
+'3',
+'Nissan',
+'Mikra II',
+'0');";
 
 $result = mysql_query($query);
 if (!$result) {

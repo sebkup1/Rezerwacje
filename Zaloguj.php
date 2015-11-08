@@ -24,7 +24,6 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 	$is_logged = "niezalogowany";
 	$on_button = "Zaloguj";
 	$to_page = "Zaloguj.php";
-
 }
 else{
 	$is_logged = "zalogowany jako ";
@@ -35,19 +34,16 @@ else{
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
    
-   if ((isset($_SESSION['login']) && $_SESSION['login'] != '')) {
-
-    header ("Location: Zarezerwuj.php");
-}
-   
-   
+   /*if ($_SESSION['login'] != '') {
+    header ("Location: index.php");
+   }*/
    
 	$uname = $_POST['username'];
 	$pword = $_POST['password'];
 	  
 	$pword = htmlspecialchars($pword);
 	  
-	//=========e=================================
+	//==========================================
 	//	CONNECT TO THE LOCAL DATABASE
 	//==========================================
 	$user_name = "root";
@@ -77,6 +73,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 				session_start();
 				$_SESSION['login'] = "1";
 				$_SESSION['user'] = $uname;
+				$row = mysql_fetch_array($result);
+				
+				$_SESSION['userId'] = $row['idOsoba'];
 				header ("Location: Zarezerwuj.php");
 			}
 			else {
