@@ -13,9 +13,12 @@
 //other login methods - set a cookie, and read that back for every page
 //collect other information: date and time of login, ip address, etc
 //don't store passwords without encrypting them
-
-$uname = "";
+/*$name = "";
+$surname = "";
+$login = "";
 $pword = "";
+$phone = "";*/
+
 $errorMessage = "";
 $num_rows = 0;
 
@@ -55,10 +58,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	//====================================================================
 	//	GET THE CHOSEN U AND P, AND CHECK IT FOR DANGEROUS CHARCTERS
 	//====================================================================
-	$uname = $_POST['username'];
+	$name = $_POST['name'];
+	$surname = $_POST['surname'];
+	$login = $_POST['login'];
 	$pword = $_POST['password'];
+	$cpword = $_POST['cpassword'];
+	$phone = $_POST['phone'];
 
-	$uname = htmlspecialchars($uname);
+	$login = htmlspecialchars($login);
 	$pword = htmlspecialchars($pword);
 
 	//====================================================================
@@ -67,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	//	if no errors occur, then $errorMessage will be blank
 	//====================================================================
 
-	$uLength = strlen($uname);
+	$uLength = strlen($login);
 	$pLength = strlen($pword);
 
 	if ($uLength >= 10 && $uLength <= 20) {
@@ -104,19 +111,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	if ($db_found) {
 
-		$uname = quote_smart($uname, $db_handle);
+		$login = quote_smart($login, $db_handle);
 		$pword = quote_smart($pword, $db_handle);
 
 	//====================================================================
 	//	CHECK THAT THE USERNAME IS NOT TAKEN
 	//====================================================================
 
-		$SQL = "SELECT * FROM `Rejestracje`.`Osoba` WHERE Login = $uname;";
+		$SQL = "SELECT * FROM `Rejestracje`.`Osoba` WHERE Login = $login;";
 		$result = mysql_query($SQL);
 		$num_rows = mysql_num_rows($result);
 
 		if ($num_rows > 0) {
-			$errorMessage = "Wpisana nazwa użytkownika widnieje już w naszej bazie. Proszę wpisac inną.";
+			$errorMessage = "Wpisany login widnieje już w naszej bazie. Proszę wpisać inny.";
 		}
 		
 		else {
@@ -125,21 +132,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 				  (
 				  `Imie`,
 				  `Nazwisko`,
-				  `Samochod`,
 				  `Login`,
 				  `Haslo`,
 				  `nr_telefonu`,
-				  `uprawniony`)
+				  `status`)
 				  VALUES
 				  (
-				  'sImie',
-				  'sNazwisko',
-				  'sSamochód',
-				   $uname,
-				   $pword,
-				  '3245333',
+				   '".$name."',
+				   '".$surname."',
+				   ".$login.",
+				   ".$pword.",
+				   '".$phone."',
 				  '1');";
+				  
 			$result = mysql_query($SQL);
+			if(!$result)
+			{
+			   $errorMessage = "Błąd wewnętrzny";
+			}
+			else
+			{
+			   session_start();
+			   $_SESSION['login'] = "1";
+			
+			   $_SESSION['user'] = $login;
+
+			   header ("Location: Zarezerwuj.php");
+			}
+			
 
 			mysql_close($db_handle);
 
@@ -148,12 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		//	SEND USER TO A DIFFERENT PAGE AFTER SIGN UP
 		//=================================================================================
 
-			session_start();
-			$_SESSION['login'] = "1";
 			
-			$_SESSION['user'] = $uname;
-
-			header ("Location: index.php");
 
 		}
 
@@ -219,12 +234,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <td width="70%" valign = "top">
    
 <FORM NAME ="form1" METHOD ="POST" ACTION ="NewUser.php">
-<br>
-<br>
-Username: <INPUT TYPE = 'TEXT' Name ='username'  value="<?PHP print $uname;?>" maxlength="20">
-<br>
-Password: <INPUT TYPE = 'TEXT' Name ='password'  value="<?PHP print $pword;?>" maxlength="16">
-<br>
+
+<table>
+   <tr>
+	  <td>Imię: </td> <td> <INPUT TYPE = 'TEXT' Name ='name'  value="<?PHP print $name;?>" maxlength="16">*</td>
+   </tr>
+   <tr>
+	  <td>Nazwisko: </td> <td>  <INPUT TYPE = 'TEXT' Name ='surname'  value="<?PHP print $surname;?>" maxlength="16">*</td>
+   </tr>
+   <tr>
+	  <td>Telefon: </td> <td>  <INPUT TYPE = 'TEXT' Name ='phone'  value="<?PHP print $phone;?>" maxlength="16">*</td>
+   </tr>
+   <tr>
+	  <td>Login: </td> <td>   <INPUT TYPE = 'TEXT' Name ='login'  value="<?PHP print "";?>" maxlength="20">*</td>
+   </tr>
+   <tr>
+	  <td>Hasło: </td> <td>  <INPUT TYPE = 'TEXT' Name ='password'  value="<?PHP print "";?>" maxlength="16">*</td>
+   </tr>
+      <tr>
+	  <td>Potwierdź hasło: </td> <td>  <INPUT TYPE = 'TEXT' Name ='cpassword'  value="<?PHP print "";?>" maxlength="16">*</td>
+   </tr>
+
+</table>
+
 <P>
 <INPUT TYPE = "Submit" Name = "Submit1"  VALUE = "Register">
 
