@@ -5,6 +5,7 @@ if (!(isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 }
 else{
 	$is_logged = "zalogowany";
+	header ("Location: Zarezerwuj.php");
 }
 
 ?>

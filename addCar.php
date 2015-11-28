@@ -2,16 +2,14 @@
 require("phpsqlajax_dbinfo.php");
 
 session_start();
-header ("Location: Dojazd.php");
+//header ("Location: Dojazd.php");
 $nr_rej = $_GET['nr_rej'];
 $marka = $_GET['marka'];
 $model = $_GET['model'];
-$wlas = $_GET['wlas'];
 $zid = $_GET['zid'];  //zidentyfikowany
-//$_SESSION['user'] = "testik";
 $user = $_SESSION['userId'];
 
-$connection=mysql_connect ('localhost', $username, $password);
+$connection=mysql_connect ('localhost', $user_name, $pass_word);
 if (!$connection) {  die('Not connected : ' . mysql_error());}
 
 // Set the active MySQL database

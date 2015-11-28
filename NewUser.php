@@ -18,7 +18,7 @@ $surname = "";
 $login = "";
 $pword = "";
 $phone = "";*/
-
+require("phpsqlajax_dbinfo.php");
 $errorMessage = "";
 $num_rows = 0;
 
@@ -76,47 +76,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	$uLength = strlen($login);
 	$pLength = strlen($pword);
+	
+	if($name =="" || $surname == "" || $login == "" || $pword == "" || $cpword == "" || $phone =="")
+    {
+		 $errorMessage = $errorMessage . "Proszę wypełnić wszsystkie z powyższych pól." . "<BR>";
+    }
+	  
+	if ($uLength < 4 || $uLength > 20)
+	{
+		 $errorMessage = $errorMessage . "Nazwa użytkownika musi się miescić między 5 a 20 znakami." . "<BR>";
+	}
 
-	if ($uLength >= 10 && $uLength <= 20) {
-		$errorMessage = "";
-	}
-	else {
-		$errorMessage = $errorMessage . "Nazwa użytkownika musi się miescić między 10 a 20 znakami" . "<BR>";
+	if ($pLength < 8 && $pLength <= 16) {
+		 $errorMessage = $errorMessage . "Hasło musi się mieścic między 8 a 16 znakami." . "<BR>";
 	}
 
-	if ($pLength >= 8 && $pLength <= 16) {
-		$errorMessage = "";
-	}
-	else {
-		$errorMessage = $errorMessage . "Hasło musi się mieścic między 8 a 16 znakami" . "<BR>";
-	}
+    if($pword != $cpword){
+		 $errorMessage = $errorMessage . "Potwirdzone hasło musi być zgodne." . "<BR>";
+    }
 
 
 //test to see if $errorMessage is blank
 //if it is, then we can go ahead with the rest of the code
 //if it's not, we can display the error
 
-	//====================================================================
-	//	Write to the database
-	//====================================================================
-	if ($errorMessage == "") {
+if ($errorMessage == "") {
 
-	$user_name = "root";
-	$pass_word = "abcd1234";
-	$database = "Rejestracje";
-	$server = "127.0.0.1";
-
-	$db_handle = mysql_connect($server, $user_name, $pass_word);
-	$db_found = mysql_select_db($database, $db_handle);
+	/*$db_handle = mysql_connect($server, $user_name, $pass_word);
+	$db_found = mysql_select_db($database, $db_handle);*/
 
 	if ($db_found) {
 
 		$login = quote_smart($login, $db_handle);
 		$pword = quote_smart($pword, $db_handle);
 
-	//====================================================================
-	//	CHECK THAT THE USERNAME IS NOT TAKEN
-	//====================================================================
 
 		$SQL = "SELECT * FROM `Rejestracje`.`Osoba` WHERE Login = $login;";
 		$result = mysql_query($SQL);
@@ -167,7 +160,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		//	START THE SESSION AND PUT SOMETHING INTO THE SESSION VARIABLE CALLED login
 		//	SEND USER TO A DIFFERENT PAGE AFTER SIGN UP
 		//=================================================================================
-
 			
 
 		}

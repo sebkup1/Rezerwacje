@@ -1,5 +1,5 @@
 <?PHP
-
+require("phpsqlajax_dbinfo.php");
 $uname = "";
 $pword = "";
 $errorMessage = "";
@@ -46,13 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	//==========================================
 	//	CONNECT TO THE LOCAL DATABASE
 	//==========================================
-	$user_name = "root";
-	$pass_word = "abcd1234";
-	$database = "Rejestracje";
-	$server = "127.0.0.1";
+
 	  
-	$db_handle = mysql_connect($server, $user_name, $pass_word);
-	$db_found = mysql_select_db($database, $db_handle);
+	/*$db_handle = mysql_connect($server, $user_name, $pass_word);
+	$db_found = mysql_select_db($database, $db_handle);*/
 
 	if ($db_found) {
 
@@ -76,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 				$row = mysql_fetch_array($result);
 				
 				$_SESSION['userId'] = $row['idOsoba'];
+				$_SESSION['status'] = $row['status'];				
 				header ("Location: Zarezerwuj.php");
 			}
 			else {
