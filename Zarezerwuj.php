@@ -22,29 +22,41 @@ else
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
 <link rel="stylesheet" type="text/css" href="myStyle.css">
 <style type="text/css"></style>
-
 	
 	<script type="text/javascript">
-    function addCarToDatabase() {
-        if (window.XMLHttpRequest) {
-            // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    function OnAddCarToDatabaseClicked() {
+		addCarToDatabase(function(data){
+			var xml = data.responseXML;
+		//document.write(xml.documentElement.getElementsByTagName("cars"));
+        var res = xml.documentElement.getElementsByTagName("result");
+		if (res.length>0) {
+			alert(res[0].getAttribute("transsactionResulst"));
+		}
+		});
+			
         }
-        xmlhttp.onreadystatechange = function() {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
-            }
+
+	  
+	function addCarToDatabase(callback) {
+      var request = window.ActiveXObject ?
+          new ActiveXObject('Microsoft.XMLHTTP') :
+          new XMLHttpRequest;
+		  
+      request.onreadystatechange = function() {
+        if (request.readyState == 4) {
+          request.onreadystatechange = doNothing;
+          callback(request, request.status);
         }
-		if ((document.forms[0].marka.value=="")||(document.forms[0].model.value=="")||(document.forms[0].nr_rej.value=="")) {
+      };
+	  
+	  	if ((document.forms[0].marka.value=="")||(document.forms[0].model.value=="")||(document.forms[0].nr_rej.value=="")) {
 			document.getElementById('SuccessOnAdd').innerHTML ="";
 			document.getElementById('BadData').innerHTML = 'Powyższe pola nie mogą zostać pozostawione puste jeżeli chcesz poprawnie dodać samochód do bazy danych.';
 		}else{
-			xmlhttp.open("GET","addCar.php?nr_rej="+document.forms[0].nr_rej.value+"&marka="+document.forms[0].marka.value+"&model="+
-					 document.forms[0].model.value+"&zid=1");
-			xmlhttp.send();
+			request.open("GET","addCar.php?nr_rej="+document.forms[0].nr_rej.value+"&marka="+document.forms[0].marka.value+"&model="+
+					 document.forms[0].model.value+"&zid=1",true);
+			request.send(null);
+			
 			document.getElementById('BadData').innerHTML = '';
 			document.getElementById('SuccessOnAdd').innerHTML = "Samochód "+ document.forms[0].marka.value + " "+ document.forms[0].model.value +
 			" o numerze rejestracyjnym " + document.forms[0].nr_rej.value +" został pomyślnie dodany do bazy.";
@@ -53,21 +65,25 @@ else
 			document.forms[0].model.value="";
 			document.forms[0].nr_rej.value="";
 			OnMyCarsClick()
+			
 		}
-      }
+
+	  
+	}
+	  
 	  
 	function OnMyCarsClick() {
 		 document.getElementById('carsTable').innerHTML ="";
 	  getCars("get_cars.php", function(data) {
         var xml = data.responseXML;
-		
+		//document.write(xml.documentElement.getElementsByTagName("cars"));
         var cars = xml.documentElement.getElementsByTagName("car");
 		
 		if (cars.length>0) {
 			var yy = document.createElement("TR");
 			yy.setAttribute("id", "nagl");
 			document.getElementById("carsTable").appendChild(yy);
-
+			
 			var nc_marka = document.createElement("TD");
 			var nd_marka = document.createTextNode("Marka");
 			nc_marka.appendChild(nd_marka);
@@ -119,6 +135,7 @@ else
 		  
         } 
       });
+
 	}
 			
 	function getCars(url, callback) {
@@ -132,6 +149,7 @@ else
           callback(request, request.status);
         }
       };
+	  
 
       request.open('GET', url, true);
       request.send(null);
@@ -204,15 +222,18 @@ else
 			}
 			
 			if($_SESSION['status']==1){
-				echo '<h3>Osoba uprzywilejowana</h3>';
+				echo '<h3 align = "center" style = "color:#0000ff">Osoba uprzywilejowana</h3>';
 			}
 			
 			echo '<h3>Dodaj nowy pojazd</h3>
 			<form name="dodaj">
-			Nr rejestracyjny:<input type="text" name = "nr_rej"  size="20"/>
-			<br>Marka:<input type="text" name = "marka"  size="13"/>
-			<br>Model:<input type="text" name = "model"  size="13"/>
-            <br><input type="button" value="Zatwierdź" name = "update" onclick= "addCarToDatabase() "/>
+			<table>
+				<tr><td>Nr rejestracyjny:</td><td><input type="text" name = "nr_rej" size="20"/></td></tr>
+				<tr><td>Marka:</td><td><input type="text" name = "marka"  size="20"/></td></tr>
+				<tr><td>Model:</td><td><input type="text" name = "model"  size="20"/></td>
+				<td><input type="button" value="Zatwierdź" name = "update" onclick= "OnAddCarToDatabaseClicked()"/></td></tr>
+				</table>
+				
 			<p style = "color:#FF0000">
 				<label id="BadData" ></label>
 			</p>
@@ -220,9 +241,8 @@ else
           </form>
 		  
 			<input type="button" value="Moje pojazdy" name = "update2" onclick= "OnMyCarsClick() "/>
-		  <h5><table id="carsTable"  width="400" visible = "false">
-
-		  </table></h5>';
+		  <table id="carsTable"  width="400" visible = "false">
+		  </table>';
 		  }
 		  
 		  ?>
@@ -235,6 +255,7 @@ else
 		print '<form action='.$to_page.'>
 				<input type="submit" value='.$on_button.'>
 				</form>'; //przycisk
+		print 'addCarTransactionStatus:' .  $_SESSION['addCarTransactionStatus'];
 	?>
 </td>
 
