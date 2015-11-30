@@ -22,7 +22,12 @@
     }
 
     // Select all the rows in the markers table
-    $query = "SELECT * FROM Rejestracje.Samochod where wlasciciel = " . $user_id  ;
+    $query = "SELECT id_Samochod,marka,model,nrRej,kod FROM Rejestracje.Samochod 
+		inner join Rejestracje.`Osoba-Samochod`
+		on (id_Samochod = idSamochod)
+		inner join Rejestracje.Kod_IR
+		on (id_Kod_IR = idKod)
+		where id_Osoba = " . $user_id  . ";";
     $result = mysql_query($query);
     if (!$result) {
       die('Invalid query: ' . mysql_error());
@@ -38,12 +43,13 @@
       // ADD TO XML DOCUMENT NODE
       $node = $dom->createElement("car");
       $newnode = $parnode->appendChild($node);
-      $newnode->setAttribute("idSamochod",$row['idSamochod']);
+      $newnode->setAttribute("id_Samochod",$row['id_Samochod']);
       $newnode->setAttribute("nrRej",$row['nrRej']);
-      $newnode->setAttribute("wlasciciel", $row['wlasciciel']);
+      //$newnode->setAttribute("wlasciciel", $row['wlasciciel']);
       $newnode->setAttribute("marka", $row['marka']);
       $newnode->setAttribute("model", $row['model']);
-      $newnode->setAttribute("Zidentyfikowany", $row['Zidentyfikowany']);
+	  $newnode->setAttribute("kod", $row['kod']);
+      //$newnode->setAttribute("Zidentyfikowany", $row['Zidentyfikowany']);
     }
 
 echo $dom->saveXML();

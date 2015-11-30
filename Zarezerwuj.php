@@ -27,11 +27,29 @@ else
     function OnAddCarToDatabaseClicked() {
 		addCarToDatabase(function(data){
 			var xml = data.responseXML;
-		//document.write(xml.documentElement.getElementsByTagName("cars"));
         var res = xml.documentElement.getElementsByTagName("result");
 		if (res.length>0) {
-			alert(res[0].getAttribute("transsactionResulst"));
+			if (res[0].getAttribute("transsactionResulst")==0) {
+				document.getElementById('BadData').innerHTML = res[0].getAttribute("transsactionResulst");
+			
+				document.getElementById('BadData').innerHTML = '';
+				document.getElementById('SuccessOnAdd').innerHTML = "Samochód "+ document.forms[0].marka.value + " "+ document.forms[0].model.value +
+				" o numerze rejestracyjnym " + document.forms[0].nr_rej.value +" został pomyślnie dodany do bazy.";
+			
+				document.forms[0].marka.value="";
+				document.forms[0].model.value="";
+				document.forms[0].nr_rej.value="";
+			}
+			else{
+				document.getElementById('BadData').innerHTML = "Błąd wewnętrzny [addCar: "+res[0].getAttribute("transsactionResulst")+"]";
+			}
+			
 		}
+		else
+		{
+			document.getElementById('BadData').innerHTML = "Błąd wewnętrzny.";
+		}
+		OnMyCarsClick();
 		});
 			
         }
@@ -56,15 +74,6 @@ else
 			request.open("GET","addCar.php?nr_rej="+document.forms[0].nr_rej.value+"&marka="+document.forms[0].marka.value+"&model="+
 					 document.forms[0].model.value+"&zid=1",true);
 			request.send(null);
-			
-			document.getElementById('BadData').innerHTML = '';
-			document.getElementById('SuccessOnAdd').innerHTML = "Samochód "+ document.forms[0].marka.value + " "+ document.forms[0].model.value +
-			" o numerze rejestracyjnym " + document.forms[0].nr_rej.value +" został pomyślnie dodany do bazy.";
-			
-			document.forms[0].marka.value="";
-			document.forms[0].model.value="";
-			document.forms[0].nr_rej.value="";
-			OnMyCarsClick()
 			
 		}
 
@@ -98,15 +107,21 @@ else
 			var nd_nrRej = document.createTextNode("Nr rejestrancyjny");
 			nc_nrRej.appendChild(nd_nrRej);
 			document.getElementById("nagl").appendChild(nc_nrRej);
+			
+			var nc_kod = document.createElement("TD");
+			var nd_kod = document.createTextNode("Kod wjazdowy");
+			nc_kod.appendChild(nd_kod);
+			document.getElementById("nagl").appendChild(nc_kod);
 		}
 		
         for (var i = 0; i < cars.length; i++) {
-          var idSamochod = cars[i].getAttribute("idSamochod");
+          var idSamochod = cars[i].getAttribute("id_Samochod");
 		  var nrRej = cars[i].getAttribute("nrRej");
-		  var wlasciciel = cars[i].getAttribute("wlasciciel");
+		  //var wlasciciel = cars[i].getAttribute("wlasciciel");
 		  var marka = cars[i].getAttribute("marka");
 		  var model = cars[i].getAttribute("model");
-		  var Zidentyfikowany = cars[i].getAttribute("Zidentyfikowany");
+		  //var Zidentyfikowany = cars[i].getAttribute("Zidentyfikowany");
+		  var kod = cars[i].getAttribute("kod");
 			
 		  //var x = document.getElementById("carsTable");
 		  //var x = document.createElement("TABLE");
@@ -132,6 +147,11 @@ else
 			var d_nrRej = document.createTextNode(nrRej);
 			c_nrRej.appendChild(d_nrRej);
 			document.getElementById(idSamochod).appendChild(c_nrRej);
+			
+			var c_kod = document.createElement("TD");
+			var d_kod = document.createTextNode(kod);
+			c_kod.appendChild(d_kod);
+			document.getElementById(idSamochod).appendChild(c_kod);
 		  
         } 
       });

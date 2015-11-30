@@ -2,6 +2,7 @@
 require("phpsqlajax_dbinfo.php");
 
 session_start();
+$user_id = $_SESSION['userId'];
 header("Content-type:text/xml");
 //$_SESSION['addCarTransactionStatus'] = 9;
 //header ("Location: Dojazd.php");
@@ -19,24 +20,27 @@ $user = $_SESSION['userId'];
     $newnode = $parnode->appendChild($node);
     
 
-$connection=mysql_connect ('localhost', $user_name, $pass_word);
-if (!$connection) {$_SESSION['addCarTransactionStatus'] = 1;}
-
-// Set the active MySQL database
-
-$db_selected = mysql_select_db("Rejestracje", $connection);
-if (!$db_selected) {
-  $_SESSION['addCarTransactionStatus'] = 2;
-}
 
 
 try {
   //$connection->autocommit(FALSE); // i.e., start transaction
-  $_SESSION['addCarTransactionStatus'] = 2;
   //$db_selected->beginTransaction();
   //$connection->autocommit(FALSE);
+  
+  $connection=mysql_connect ('localhost', $user_name, $pass_word);
+  if (!$connection) {
+    $newnode->setAttribute("transsactionResulst",1);
+    throw new Exception($connection->error);
+    }
+
+  // Set the active MySQL database
+  $db_selected = mysql_select_db("Rejestracje", $connection);
+  if (!$db_selected) {
+    $newnode->setAttribute("transsactionResulst",2);
+    throw new Exception($connection->error);
+  }
+  
   mysql_query("START TRANSACTION");
-  $_SESSION['addCarTransactionStatus'] = 4;
   $query = "INSERT INTO `Rejestracje`.`Samochod`
   (
   `nrRej`,
@@ -50,33 +54,93 @@ try {
   '".$user."',
   '".$marka."',
   '".$model."',
-  '".$zid."');";
+  '".$zid."');
+  ";  // SELECT LAST_INSERT_ID();
+   
   
   $result = mysql_query($query);
   
   if (!$result) {
     $result->free();
-    $_SESSION['addCarTransactionStatus'] = 5;
+    $newnode->setAttribute("transsactionResulst",3);
+    throw new Exception($connection->error);
+  }
+  
+  $query = "SELECT LAST_INSERT_ID();";
+  $result = mysql_query($query);
+  
+  if (!$result) {
+    $result->free();
+    $newnode->setAttribute("transsactionResulst",4);
+    throw new Exception($connection->error);
+  }
+  
+  while ($row = @mysql_fetch_assoc($result)){
+    $carId = $row['LAST_INSERT_ID()'];
+  }
+  
+  //Dodanie kodu IR
+  $generatedCode =  rand ( 10000, 100000 );
+  
+  $query = "INSERT INTO `Rejestracje`.`Kod_IR`
+  (
+  `kod`)
+  VALUES
+  (
+   '".$generatedCode."');";
+   
+  $result = mysql_query($query);
+  
+  if (!$result) {
+    $result->free();
     $newnode->setAttribute("transsactionResulst",5);
     throw new Exception($connection->error);
   }
-    /*$connection->commit();
-    $connection->autocommit(TRUE);*/ // i.e., end transaction
   
-  //$db_selected->commit();
+  $query = "SELECT LAST_INSERT_ID();";
+  $result = mysql_query($query);
   
-  $_SESSION['addCarTransactionStatus'] = 0;
-  $newnode->setAttribute("transsactionResulst","full");
+  if (!$result) {
+    $result->free();
+    $newnode->setAttribute("transsactionResulst",6);
+    throw new Exception($connection->error);
+  }
   
+  while ($row = @mysql_fetch_assoc($result)){
+    $codeId = $row['LAST_INSERT_ID()'];
+  }
+  
+  //Dodanie zwiazku osoba - samochód
+  $query = "INSERT INTO `Rejestracje`.`Osoba-Samochod`
+  (
+  `id_Osoba`,
+  `id_Samochod`,
+  `id_Kod_IR`)
+  VALUES
+  (
+  '".$user_id."',
+  '".$carId."',
+  '".$codeId."');
+  ";
+
+  
+  $result = mysql_query($query);
+  
+  if (!$result) {
+    $result->free();
+    $newnode->setAttribute("transsactionResulst","7");
+    throw new Exception($connection->error);
+  }
+
+  
+  
+  //All success - commit transaction
+  $newnode->setAttribute("transsactionResulst",0);
   mysql_query("COMMIT");
-}catch( Exception $e ){
+  
+}
+catch( Exception $e ){
   mysql_query("ROLLBACK");
-    $_SESSION['addCarTransactionStatus'] = 2;
-    $newnode->setAttribute("transsactionResulst",2);
-    // An exception has been thrown
-    // We must rollback the transaction
-   // $db_selected->rollback();
-    
 }
 
 
