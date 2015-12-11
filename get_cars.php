@@ -23,7 +23,7 @@
 
     // Select all the rows in the markers table
     $query = "SELECT id_Samochod,marka,model,nrRej,kod FROM Rejestracje.Samochod 
-		inner join Rejestracje.`Osoba-Samochod`
+		inner join Rejestracje.`Osoba_samochod`
 		on (id_Samochod = idSamochod)
 		inner join Rejestracje.Kod_IR
 		on (id_Kod_IR = idKod)

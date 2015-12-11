@@ -149,6 +149,18 @@ if ($errorMessage == "") {
 			   $_SESSION['login'] = "1";
 			
 			   $_SESSION['user'] = $login;
+			   
+			   $query = "SELECT LAST_INSERT_ID();";
+			   $result = mysql_query($query);
+  
+				  if (!$result) {
+					 $result->free();
+					 //throw new Exception($connection->error);
+				  }
+  
+				  while ($row = @mysql_fetch_assoc($result)){
+					 $_SESSION['userId'] = $row['LAST_INSERT_ID()'];
+				  }
 
 			   header ("Location: Zarezerwuj.php");
 			}

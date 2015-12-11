@@ -24,6 +24,7 @@ else
 <style type="text/css"></style>
 	
 	<script type="text/javascript">
+		var addeCar=0;
     function OnAddCarToDatabaseClicked() {
 		addCarToDatabase(function(data){
 			var xml = data.responseXML;
@@ -49,6 +50,7 @@ else
 		{
 			document.getElementById('BadData').innerHTML = "Błąd wewnętrzny.";
 		}
+		addeCar=1;
 		OnMyCarsClick();
 		});
 			
@@ -73,16 +75,23 @@ else
 		}else{
 			request.open("GET","addCar.php?nr_rej="+document.forms[0].nr_rej.value+"&marka="+document.forms[0].marka.value+"&model="+
 					 document.forms[0].model.value+"&zid=1",true);
+			//request.open("GET","addCar.php",true);
 			request.send(null);
 			
 		}
 
-	  
 	}
 	  
 	  
 	function OnMyCarsClick() {
 		 document.getElementById('carsTable').innerHTML ="";
+		 
+		 if (addeCar!=1) {
+			var table = document.getElementById('carsTable');
+			table.style.display = (table.style.display == "none") ? "table ": "none";
+		 }
+		 addeCar=0;
+		 
 	  getCars("get_cars.php", function(data) {
         var xml = data.responseXML;
 		//document.write(xml.documentElement.getElementsByTagName("cars"));
@@ -176,6 +185,11 @@ else
 	}
 	
 	function doNothing() {}
+	
+	function OnAddNewButtonClick() {
+		var table = document.getElementById('AddCar');
+		 table.style.display = (table.style.display == "none") ? "table ": "none";
+	}
 </script>
 
 </head>
@@ -238,16 +252,16 @@ else
 			}
 			
 			if($_SESSION['status']==2){
-				echo '2';
+				echo '<h3 align = "center" style = "color:#0000ff">Twój abonametn jest ważny</h3>';
 			}
 			
 			if($_SESSION['status']==1){
 				echo '<h3 align = "center" style = "color:#0000ff">Osoba uprzywilejowana</h3>';
 			}
 			
-			echo '<h3>Dodaj nowy pojazd</h3>
+			echo '<input type="button" value="Dodaj nowy samochód" name = "addNewButton" onclick= "OnAddNewButtonClick() "/>
 			<form name="dodaj">
-			<table>
+			<table id = "AddCar" style = "display:none">
 				<tr><td>Nr rejestracyjny:</td><td><input type="text" name = "nr_rej" size="20"/></td></tr>
 				<tr><td>Marka:</td><td><input type="text" name = "marka"  size="20"/></td></tr>
 				<tr><td>Model:</td><td><input type="text" name = "model"  size="20"/></td>
@@ -261,7 +275,7 @@ else
           </form>
 		  
 			<input type="button" value="Moje pojazdy" name = "update2" onclick= "OnMyCarsClick() "/>
-		  <table id="carsTable"  width="400" visible = "false">
+		  <table id="carsTable"  width="400" style = "display:none">
 		  </table>';
 		  }
 		  
@@ -275,7 +289,6 @@ else
 		print '<form action='.$to_page.'>
 				<input type="submit" value='.$on_button.'>
 				</form>'; //przycisk
-		print 'addCarTransactionStatus:' .  $_SESSION['addCarTransactionStatus'];
 	?>
 </td>
 

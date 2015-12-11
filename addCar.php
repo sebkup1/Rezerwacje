@@ -80,7 +80,7 @@ try {
   }
   
   //Dodanie kodu IR
-  $generatedCode =  rand ( 10000, 100000 );
+  $generatedCode =  rand ( 1000000, 10000000 );
   
   $query = "INSERT INTO `Rejestracje`.`Kod_IR`
   (
@@ -111,7 +111,7 @@ try {
   }
   
   //Dodanie zwiazku osoba - samochód
-  $query = "INSERT INTO `Rejestracje`.`Osoba-Samochod`
+  $query = "INSERT INTO `Rejestracje`.`Osoba_samochod`
   (
   `id_Osoba`,
   `id_Samochod`,
