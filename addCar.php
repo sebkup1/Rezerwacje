@@ -115,13 +115,14 @@ try {
   (
   `id_Osoba`,
   `id_Samochod`,
-  `id_Kod_IR`)
+  `id_Kod_IR`,
+  `wlasciciel_abonamentu`)
   VALUES
   (
   '".$user_id."',
   '".$carId."',
-  '".$codeId."');
-  ";
+  '".$codeId."',
+  '".$user_id."');";
 
   
   $result = mysql_query($query);

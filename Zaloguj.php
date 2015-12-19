@@ -164,9 +164,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
    <FORM NAME ="form1" METHOD ="POST" ACTION ="Zaloguj.php">
 		<br>
 		<br>
-		Username: <INPUT TYPE = 'TEXT' Name ='username'   maxlength="20">
-		<br>
-      	Password: <INPUT TYPE = 'TEXT' Name ='password'   maxlength="16">
+		<table>
+			<td>
+			Username:
+			<br><br>
+			Password:
+			</td>
+			
+			<td>
+			<INPUT TYPE = 'TEXT' Name ='username'   maxlength="20">
+			<br><br>
+			<INPUT TYPE = 'TEXT' Name ='password'   maxlength="16">
+			</td>
+			
+		 </table>
+		
 		 
       	<P align = center>
 		 <INPUT TYPE = "Submit" Name = "Submit1"  VALUE = "Login">

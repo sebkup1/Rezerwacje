@@ -1,13 +1,20 @@
 <?php
 require("phpsqlajax_dbinfo.php");
+    session_start();
+    header("Content-type:text/xml");
 
-
-header("Content-type:text/xml");
-
-$user = $_GET['person'];
-$carId = $_GET['car'];
-
-
+    $user = $_GET['person'];
+    $carId = $_GET['car'];
+    if($_GET['aboOwner']==0)
+    {
+      $aboOwner = $_SESSION['userId'];
+    }
+    else
+    {
+      $aboOwner = $_GET['person'];
+    }
+    
+    
     $dom = new DOMDocument("1.0");
     $node = $dom->createElement("results");
     $parnode = $dom->appendChild($node);
@@ -15,7 +22,8 @@ $carId = $_GET['car'];
     $node = $dom->createElement("result");
     $newnode = $parnode->appendChild($node);
     
-
+    //$newnode->setAttribute("transsactionResulst",-100);
+    
 try {
   
   $connection=mysql_connect ('localhost', $user_name, $pass_word);
@@ -30,8 +38,8 @@ try {
     $newnode->setAttribute("transsactionResulst",2);
     throw new Exception($connection->error);
   }
-  
-  mysql_query("START TRANSACTION");
+  //mysql_query("ROLLBACK");
+  //mysql_query("START TRANSACTION");
   
   //Dodanie kodu IR
   $generatedCode =  rand ( 1000000, 10000000 );
@@ -59,7 +67,7 @@ try {
     $newnode->setAttribute("transsactionResulst",6);
     throw new Exception($connection->error);
   }
-  
+  //$codeId=2;
   while ($row = @mysql_fetch_assoc($result)){
     $codeId = $row['LAST_INSERT_ID()'];
   }
@@ -69,33 +77,33 @@ try {
   (
   `id_Osoba`,
   `id_Samochod`,
-  `id_Kod_IR`)
+  `id_Kod_IR`,
+  `wlasciciel_abonamentu`)
   VALUES
   (
-
   '".$user."',
   '".$carId."',
-  '".$codeId."');
-  ";
-
+  '".$codeId."',
+  '".$aboOwner."');";
   
-  $result = mysql_query($query);
+  //$result = mysqli_query($connection,$query);
   
-  if (!$result) {
+  if (!mysql_query($query)) {
     $result->free();
     $newnode->setAttribute("transsactionResulst","7");
-    throw new Exception($connection->error);
+    //throw new Exception($connection->error);
   }
 
   
   
   //All success - commit transaction
   $newnode->setAttribute("transsactionResulst",0);
-  mysql_query("COMMIT");
+  //mysql_query("COMMIT");
   
 }
 catch( Exception $e ){
-  mysql_query("ROLLBACK");
+  //mysql_query("ROLLBACK");
+  //$newnode->setAttribute("transsactionResulst","17");
 }
 
 

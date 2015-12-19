@@ -1,5 +1,7 @@
 <?php
 	require("phpsqlajax_dbinfo.php");
+	session_start();
+	$user = $_SESSION['userId'];
     $name = $_GET['name'];
 	$surname = $_GET['surname'];
     // Start XML file, create parent node
@@ -22,7 +24,8 @@
 
     // Select all the rows in the markers table
     $query = "SELECT idOsoba, Imie, Nazwisko from Rejestracje.Osoba
-		where Imie like '".$name."%' and Nazwisko like '".$surname."%';";
+		where Imie like '".$name."%' and Nazwisko like '".$surname."%'
+		and idOsoba != ".$user.";";
     $result = mysql_query($query);
     if (!$result) {
       die('Invalid query: ' . mysql_error());
