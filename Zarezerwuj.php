@@ -157,17 +157,27 @@ else
 		stable.style.display = "none";
 		document.getElementById('CarToShare').innerHTML = "";
 		document.getElementById('udst').innerHTML = "";
-		/*var labelcar = document.getElementById('CarToShare');
-		labelcar.style.display = "none";*/
-		//stable.innerHTML ="";
-		 //document.getElementById('CarToShare').innerHTML ="";
+		document.getElementById('myauta').innerHTML = "";
+		document.getElementById('udstKomus').innerHTML = "";
+		document.getElementById('obcAboMi').innerHTML = "";//
+		document.getElementById('mojAboKomus').innerHTML = "";
+
 		 var table = document.getElementById('carsTable');
 			table.innerHTML ="";
 		 var table2 = document.getElementById('alienCarsTable');
-			table2.innerHTML ="";
+			table2.innerHTML ="";//
+		 var table3 = document.getElementById('MyCarsAlienAboTable');
+			table3.innerHTML ="";//
+		 var table4 = document.getElementById('AlienCarsMyAboTable');
+			table4.innerHTML ="";
+		 var table5 = document.getElementById('myCarsToAlienTable');
+			table5.innerHTML ="";
 		 if (addeCar!=1) {
-			table.style.display = (table.style.display == "none") ? "table ": "none";
+			table.style.display  = (table.style.display  == "none") ? "table ": "none";
 			table2.style.display = (table2.style.display == "none") ? "table ": "none";
+			table3.style.display = (table3.style.display == "none") ? "table ": "none";
+			table4.style.display = (table4.style.display == "none") ? "table ": "none";
+			table5.style.display = (table5.style.display == "none") ? "table ": "none";
 		 }
 		 addeCar=0;
 		 
@@ -182,6 +192,7 @@ else
         var cars = xml.documentElement.getElementsByTagName("car");
 		
 		if (cars.length>0) {
+			document.getElementById('myauta').innerHTML = "> Auta, których jestem właścicielem";
 			var yy = document.createElement("TR");
 			yy.setAttribute("id", "nagl");
 			document.getElementById("carsTable").appendChild(yy);
@@ -274,14 +285,13 @@ else
 			
         } 
       });
-	  getCars("get_cars.php?idOsoba=0"+"&operator=1", function(data) {
+	  getCars("get_shared_cars.php?scenario=1", function(data) {
 		
         var xml = data.responseXML;
-		//document.write(xml.documentElement.getElementsByTagName("cars"));
         var cars = xml.documentElement.getElementsByTagName("car");
 		
 		if (cars.length>0) {
-			document.getElementById('udst').innerHTML = "Udostępnione od innych";
+			document.getElementById('udst').innerHTML = "> Udostępnione mi w ramach moejgo aboanmentu";
 			var yy = document.createElement("TR");
 			yy.setAttribute("id", "naglu");
 			document.getElementById("alienCarsTable").appendChild(yy);
@@ -306,6 +316,11 @@ else
 			nc_kod.appendChild(nd_kod);
 			document.getElementById("naglu").appendChild(nc_kod);
 			
+			var nc_osoba = document.createElement("TD");
+			var nd_osoba = document.createTextNode("> Osoba udostępniająca samochód");
+			nc_osoba.appendChild(nd_osoba);
+			document.getElementById("naglu").appendChild(nc_osoba);
+			
 			/*var nc_change = document.createElement("TD");
 			var nd_change = document.createTextNode("-----------------------");
 			nc_change.appendChild(nd_change);
@@ -327,6 +342,8 @@ else
 		  var model = cars[i].getAttribute("model");
 		  //var Zidentyfikowany = cars[i].getAttribute("Zidentyfikowany");
 		  var kod = cars[i].getAttribute("kod");
+		  var imie = cars[i].getAttribute("Imie");
+		  var nazwisko = cars[i].getAttribute("Nazwisko");
 
 			var y = document.createElement("TR");
 			y.setAttribute("id", idosoba_samochod+"zku");
@@ -352,12 +369,287 @@ else
 			c_kod.appendChild(d_kod);
 			document.getElementById(idosoba_samochod+"zku").appendChild(c_kod);
 			
+			var c_osoba = document.createElement("TD");
+			var d_osoba = document.createTextNode(imie+" "+nazwisko);
+			c_osoba.appendChild(d_osoba);
+			document.getElementById(idosoba_samochod+"zku").appendChild(c_osoba);
+			
 			var c_change = document.createElement("BUTTON");
 			var d_change = document.createTextNode("Zmień kod");
 			c_change.appendChild(d_change);
 			document.getElementById(idosoba_samochod+"zku").appendChild(c_change);
 			c_change.setAttribute("id",kod);
 			setCodeChangeButton(kod);
+        } 
+      });
+	  getCars("get_shared_cars.php?scenario=0", function(data) {
+		
+        var xml = data.responseXML;
+        var cars = xml.documentElement.getElementsByTagName("car");
+		
+		if (cars.length>0) {
+			document.getElementById('udstKomus').innerHTML = "> Udostępnione innym w ramach ich aboanmentu";
+			var yy = document.createElement("TR");
+			yy.setAttribute("id", "nagluk");
+			document.getElementById("myCarsToAlienTable").appendChild(yy);
+			
+			var nc_marka = document.createElement("TD");
+			var nd_marka = document.createTextNode("Marka");
+			nc_marka.appendChild(nd_marka);
+			document.getElementById("nagluk").appendChild(nc_marka);
+			
+			var nc_model = document.createElement("TD");
+			var nd_model = document.createTextNode("Model");
+			nc_model.appendChild(nd_model);
+			document.getElementById("nagluk").appendChild(nc_model);
+			
+			var nc_nrRej = document.createElement("TD");
+			var nd_nrRej = document.createTextNode("Nr rejestrancyjny");
+			nc_nrRej.appendChild(nd_nrRej);
+			document.getElementById("nagluk").appendChild(nc_nrRej);
+			
+			/*var nc_kod = document.createElement("TD");
+			var nd_kod = document.createTextNode("Kod wjazdowy");
+			nc_kod.appendChild(nd_kod);
+			document.getElementById("nagluk").appendChild(nc_kod);*/
+			
+			var nc_osoba = document.createElement("TD");
+			var nd_osoba = document.createTextNode("Osoba, której udostępniono samochód");
+			nc_osoba.appendChild(nd_osoba);
+			document.getElementById("nagluk").appendChild(nc_osoba);
+			
+			/*var nc_change = document.createElement("TD");
+			var nd_change = document.createTextNode("-----------------------");
+			nc_change.appendChild(nd_change);
+			document.getElementById("naglu").appendChild(nc_change);
+			
+			var nc_share = document.createElement("TD");
+			var nd_share = document.createTextNode("-----------------------");
+			nc_share.appendChild(nd_share);
+			document.getElementById("naglu").appendChild(nc_share);*/
+			
+		}
+
+        for ( var i = 0; i < cars.length; i++) {
+          var idSamochod = cars[i].getAttribute("id_Samochod");//id_Samochod
+		  var idosoba_samochod = cars[i].getAttribute("idosoba_samochod");
+		  var nrRej = cars[i].getAttribute("nrRej");
+		  //var wlasciciel = cars[i].getAttribute("wlasciciel");
+		  var marka = cars[i].getAttribute("marka");
+		  var model = cars[i].getAttribute("model");
+		  //var Zidentyfikowany = cars[i].getAttribute("Zidentyfikowany");
+		  var kod = cars[i].getAttribute("kod");
+		  var imie = cars[i].getAttribute("Imie");
+		  var nazwisko = cars[i].getAttribute("Nazwisko");
+
+			var y = document.createElement("TR");
+			y.setAttribute("id", idosoba_samochod+"zkuk");
+			document.getElementById("myCarsToAlienTable").appendChild(y);
+
+			var c_marka = document.createElement("TD");
+			var d_marka = document.createTextNode(marka);
+			c_marka.appendChild(d_marka);
+			document.getElementById(idosoba_samochod+"zkuk").appendChild(c_marka);
+			
+			var c_model = document.createElement("TD");
+			var d_model = document.createTextNode(model);
+			c_model.appendChild(d_model);
+			document.getElementById(idosoba_samochod+"zkuk").appendChild(c_model);
+			
+			var c_nrRej = document.createElement("TD");
+			var d_nrRej = document.createTextNode(nrRej);
+			c_nrRej.appendChild(d_nrRej);
+			document.getElementById(idosoba_samochod+"zkuk").appendChild(c_nrRej);
+			
+			/*var c_kod = document.createElement("TD");
+			var d_kod = document.createTextNode(kod);
+			c_kod.appendChild(d_kod);
+			document.getElementById(idosoba_samochod+"zkuk").appendChild(c_kod);*/
+			
+			var c_osoba = document.createElement("TD");
+			var d_osoba = document.createTextNode(imie+" "+nazwisko);
+			c_osoba.appendChild(d_osoba);
+			document.getElementById(idosoba_samochod+"zkuk").appendChild(c_osoba);
+			
+			/*var c_change = document.createElement("BUTTON");
+			var d_change = document.createTextNode("Zmień kod");
+			c_change.appendChild(d_change);
+			document.getElementById(idosoba_samochod+"zkuk").appendChild(c_change);
+			c_change.setAttribute("id",kod);
+			setCodeChangeButton(kod);*/
+        } 
+      });
+	  getCars("get_sahred_Abo_cars.php?scenario=1", function(data) {
+		
+        var xml = data.responseXML;
+		//document.write(xml.documentElement.getElementsByTagName("cars"));
+        var cars = xml.documentElement.getElementsByTagName("car");
+		
+		if (cars.length>0) {
+			document.getElementById('obcAboMi').innerHTML = "> Udostępnione od innych w ramach ich aboanmentu";
+			var yy = document.createElement("TR");
+			yy.setAttribute("id", "naglumi");
+			document.getElementById("MyCarsAlienAboTable").appendChild(yy);
+			
+			var nc_marka = document.createElement("TD");
+			var nd_marka = document.createTextNode("Marka");
+			nc_marka.appendChild(nd_marka);
+			document.getElementById("naglumi").appendChild(nc_marka);
+			
+			var nc_model = document.createElement("TD");
+			var nd_model = document.createTextNode("Model");
+			nc_model.appendChild(nd_model);
+			document.getElementById("naglumi").appendChild(nc_model);
+			
+			var nc_nrRej = document.createElement("TD");
+			var nd_nrRej = document.createTextNode("Nr rejestrancyjny");
+			nc_nrRej.appendChild(nd_nrRej);
+			document.getElementById("naglumi").appendChild(nc_nrRej);
+			
+			var nc_kod = document.createElement("TD");
+			var nd_kod = document.createTextNode("Kod wjazdowy");
+			nc_kod.appendChild(nd_kod);
+			document.getElementById("naglumi").appendChild(nc_kod);
+			
+			var nc_osoba = document.createElement("TD");
+			var nd_osoba = document.createTextNode("Osoba udostępniająca abonament");
+			nc_osoba.appendChild(nd_osoba);
+			document.getElementById("naglumi").appendChild(nc_osoba);
+			
+		}
+
+        for ( var i = 0; i < cars.length; i++) {
+          var idSamochod = cars[i].getAttribute("id_Samochod");//id_Samochod
+		  var idosoba_samochod = cars[i].getAttribute("idosoba_samochod");
+		  var nrRej = cars[i].getAttribute("nrRej");
+		  var marka = cars[i].getAttribute("marka");
+		  var model = cars[i].getAttribute("model");
+		  var kod = cars[i].getAttribute("kod");
+		  var imie = cars[i].getAttribute("Imie");
+		  var nazwisko = cars[i].getAttribute("Nazwisko");
+
+			var y = document.createElement("TR");
+			y.setAttribute("id", idosoba_samochod+"zkumi");
+			document.getElementById("MyCarsAlienAboTable").appendChild(y);
+
+			var c_marka = document.createElement("TD");
+			var d_marka = document.createTextNode(marka);
+			c_marka.appendChild(d_marka);
+			document.getElementById(idosoba_samochod+"zkumi").appendChild(c_marka);
+			
+			var c_model = document.createElement("TD");
+			var d_model = document.createTextNode(model);
+			c_model.appendChild(d_model);
+			document.getElementById(idosoba_samochod+"zkumi").appendChild(c_model);
+			
+			var c_nrRej = document.createElement("TD");
+			var d_nrRej = document.createTextNode(nrRej);
+			c_nrRej.appendChild(d_nrRej);
+			document.getElementById(idosoba_samochod+"zkumi").appendChild(c_nrRej);
+			
+			var c_kod = document.createElement("TD");
+			var d_kod = document.createTextNode(kod);
+			c_kod.appendChild(d_kod);
+			document.getElementById(idosoba_samochod+"zkumi").appendChild(c_kod);
+			
+			var c_osoba = document.createElement("TD");
+			var d_osoba = document.createTextNode(imie+" "+nazwisko);
+			c_osoba.appendChild(d_osoba);
+			document.getElementById(idosoba_samochod+"zkumi").appendChild(c_osoba);
+			
+			var c_change = document.createElement("BUTTON");
+			var d_change = document.createTextNode("Zmień kod");
+			c_change.appendChild(d_change);
+			document.getElementById(idosoba_samochod+"zkumi").appendChild(c_change);
+			c_change.setAttribute("id",kod);
+			setCodeChangeButton(kod);
+        } 
+      });
+	  
+	  getCars("get_sahred_Abo_cars.php?scenario=0", function(data) {
+		
+        var xml = data.responseXML;
+		//document.write(xml.documentElement.getElementsByTagName("cars"));
+        var cars = xml.documentElement.getElementsByTagName("car");
+		
+		if (cars.length>0) {
+			document.getElementById('mojAboKomus').innerHTML = "> Udostępnienie mojego abonamentu innym";
+			var yy = document.createElement("TR");
+			yy.setAttribute("id", "naglukom");
+			document.getElementById("AlienCarsMyAboTable").appendChild(yy);
+			
+			var nc_marka = document.createElement("TD");
+			var nd_marka = document.createTextNode("Marka");
+			nc_marka.appendChild(nd_marka);
+			document.getElementById("naglukom").appendChild(nc_marka);
+			
+			var nc_model = document.createElement("TD");
+			var nd_model = document.createTextNode("Model");
+			nc_model.appendChild(nd_model);
+			document.getElementById("naglukom").appendChild(nc_model);
+			
+			var nc_nrRej = document.createElement("TD");
+			var nd_nrRej = document.createTextNode("Nr rejestrancyjny");
+			nc_nrRej.appendChild(nd_nrRej);
+			document.getElementById("naglukom").appendChild(nc_nrRej);
+			
+			var nc_kod = document.createElement("TD");
+			var nd_kod = document.createTextNode("Kod wjazdowy");
+			nc_kod.appendChild(nd_kod);
+			document.getElementById("naglukom").appendChild(nc_kod);
+			
+			var nc_osoba = document.createElement("TD");
+			var nd_osoba = document.createTextNode("Osoba, której udostępniono abonament");
+			nc_osoba.appendChild(nd_osoba);
+			document.getElementById("naglukom").appendChild(nc_osoba);
+			
+		}
+
+        for ( var i = 0; i < cars.length; i++) {
+          var idSamochod = cars[i].getAttribute("id_Samochod");//id_Samochod
+		  var idosoba_samochod = cars[i].getAttribute("idosoba_samochod");
+		  var nrRej = cars[i].getAttribute("nrRej");
+		  var marka = cars[i].getAttribute("marka");
+		  var model = cars[i].getAttribute("model");
+		  var kod = cars[i].getAttribute("kod");
+		  var imie = cars[i].getAttribute("Imie");
+		  var nazwisko = cars[i].getAttribute("Nazwisko");
+
+			var y = document.createElement("TR");
+			y.setAttribute("id", idosoba_samochod+"zkukom");
+			document.getElementById("AlienCarsMyAboTable").appendChild(y);
+
+			var c_marka = document.createElement("TD");
+			var d_marka = document.createTextNode(marka);
+			c_marka.appendChild(d_marka);
+			document.getElementById(idosoba_samochod+"zkukom").appendChild(c_marka);
+			
+			var c_model = document.createElement("TD");
+			var d_model = document.createTextNode(model);
+			c_model.appendChild(d_model);
+			document.getElementById(idosoba_samochod+"zkukom").appendChild(c_model);
+			
+			var c_nrRej = document.createElement("TD");
+			var d_nrRej = document.createTextNode(nrRej);
+			c_nrRej.appendChild(d_nrRej);
+			document.getElementById(idosoba_samochod+"zkukom").appendChild(c_nrRej);
+			
+			var c_kod = document.createElement("TD");
+			var d_kod = document.createTextNode(kod);
+			c_kod.appendChild(d_kod);
+			document.getElementById(idosoba_samochod+"zkukom").appendChild(c_kod);
+			
+			var c_osoba = document.createElement("TD");
+			var d_osoba = document.createTextNode(imie+" "+nazwisko);
+			c_osoba.appendChild(d_osoba);
+			document.getElementById(idosoba_samochod+"zkukom").appendChild(c_osoba);
+			
+			/*var c_change = document.createElement("BUTTON");
+			var d_change = document.createTextNode("Zmień kod");
+			c_change.appendChild(d_change);
+			document.getElementById(idosoba_samochod+"zkukom").appendChild(c_change);
+			c_change.setAttribute("id",kod);
+			setCodeChangeButton(kod);*/
         } 
       });
 	}
@@ -509,7 +801,6 @@ else
 	}
 	
 	function setChoseButton(t,idOsoba) {
-		
 		var td = document.getElementById(t);
 		if (typeof window.addEventListener==='function'){
       td.addEventListener('click',function(){
@@ -829,20 +1120,20 @@ else
 		  }
 		  else{
 			
+			if($_SESSION['status']==4){
+				echo '<h3 align = "center" style = "color:#0000ff">Masz prawo do jednorazowego wjazdu</h3>';
+			}
+			
 			if($_SESSION['status']==3){
-				echo '<h3 align = "center" style = "color:#FF0000"> Nie masz uprawnień do wjazdu na teren parkingu</h3>';
+				echo '<h3 align = "center" style = "color:#ff0000"> Nie masz uprawnień do wjazdu na teren parkingu</h3>';
 			}
 			
 			if($_SESSION['status']==2){
-				echo '<h3 align = "center" style = "color:#0000ff">Twój abonametn jest ważny</h3>';
+				echo '<h3 align = "center" style = "color:#0000ff">Twój abonament jest ważny</h3>';
 			}
 			
 			if($_SESSION['status']==1){
 				echo '<h3 align = "center" style = "color:#0000ff">Osoba uprzywilejowana</h3>';
-			}
-			
-			if($_SESSION['status']==4){
-				echo '<h3 align = "center" style = "color:#0000ff">Masz prawo do jednorazowego wjazdu</h3>';
 			}
 			
 			echo '
@@ -868,12 +1159,32 @@ else
           </form>
 		  <br>
 			<input type="button" value="Moje pojazdy" name = "update2" onclick= "OnMyCarsClick()"/>
+			<p >
+				<label id="myauta" ></label>
+			</p>
 		  <table id="carsTable"  width="400" style = "display:none"></table>
 		  <p >
 				<label id="udst" ></label>
 			</p>
 			
 		  <table id="alienCarsTable"  width="400" style = "display:none"></table>
+		  
+		  <p >
+				<label id="udstKomus" ></label>
+			</p>
+			
+		  <table id="myCarsToAlienTable"  width="400" style = "display:none"></table>
+		  
+		   <p >
+				<label id="obcAboMi" ></label>
+			</p>
+		  <table id="MyCarsAlienAboTable"  width="400" style = "display:none"></table>
+		  
+		  <p >
+				<label id="mojAboKomus" ></label>
+			</p>
+		  <table id="AlienCarsMyAboTable"  width="400" style = "display:none"></table>
+		  
 		  <input type="hidden" id="meta1" value="">
 		  
 		  <form name="udostepnij">
