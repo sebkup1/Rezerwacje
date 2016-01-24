@@ -41,7 +41,7 @@ else
         var res = xml.documentElement.getElementsByTagName("result");
 		if (res.length>0) {
 			if (res[0].getAttribute("transsactionResulst")==0) {
-				document.getElementById('BadData').innerHTML = res[0].getAttribute("transsactionResulst");
+				//document.getElementById('BadData').innerHTML = res[0].getAttribute("transsactionResulst");
 			
 				document.getElementById('BadData').innerHTML = '';
 				document.getElementById('SuccessOnAdd').innerHTML = "Samochód "+ document.forms[0].marka.value + " "+ document.forms[0].model.value +
@@ -130,7 +130,7 @@ else
 				//stable.style.display = "none"; 
 				addeCar=1;
 				OnMyCarsClick()
-				document.getElementById('BadData').innerHTML = res[0].getAttribute("transsactionResulst");
+				//document.getElementById('BadData').innerHTML = res[0].getAttribute("transsactionResulst");
 			
 				document.getElementById('BadData').innerHTML = '';
 			}
@@ -159,10 +159,13 @@ else
 		document.getElementById('udst').innerHTML = "";
 		document.getElementById('myauta').innerHTML = "";
 		document.getElementById('udstKomus').innerHTML = "";
-		document.getElementById('obcAboMi').innerHTML = "";//
+		document.getElementById('obcAboMi').innerHTML = "";
 		document.getElementById('mojAboKomus').innerHTML = "";
+		document.getElementById('BadDataUdstMyCar').innerHTML = "";
+		document.getElementById('SuccessUdstMyCar').innerHTML = "";
+		
 
-		 var table = document.getElementById('carsTable');
+		 var table  = document.getElementById('carsTable');
 			table.innerHTML ="";
 		 var table2 = document.getElementById('alienCarsTable');
 			table2.innerHTML ="";//
@@ -193,6 +196,7 @@ else
 		
 		if (cars.length>0) {
 			document.getElementById('myauta').innerHTML = "> Auta, których jestem właścicielem";
+			document.getElementById('myauta').style.fontWeight = 'bold';
 			var yy = document.createElement("TR");
 			yy.setAttribute("id", "nagl");
 			document.getElementById("carsTable").appendChild(yy);
@@ -208,7 +212,7 @@ else
 			document.getElementById("nagl").appendChild(nc_model);
 			
 			var nc_nrRej = document.createElement("TD");
-			var nd_nrRej = document.createTextNode("Nr rejestrancyjny");
+			var nd_nrRej = document.createTextNode("Nr rejestracyjny");
 			nc_nrRej.appendChild(nd_nrRej);
 			document.getElementById("nagl").appendChild(nc_nrRej);
 			
@@ -291,7 +295,8 @@ else
         var cars = xml.documentElement.getElementsByTagName("car");
 		
 		if (cars.length>0) {
-			document.getElementById('udst').innerHTML = "> Udostępnione mi w ramach moejgo aboanmentu";
+			document.getElementById('udst').innerHTML = "> Udostępnione mi w ramach mojego abonamentu";
+			document.getElementById('udst').style.fontWeight = 'bold';
 			var yy = document.createElement("TR");
 			yy.setAttribute("id", "naglu");
 			document.getElementById("alienCarsTable").appendChild(yy);
@@ -307,7 +312,7 @@ else
 			document.getElementById("naglu").appendChild(nc_model);
 			
 			var nc_nrRej = document.createElement("TD");
-			var nd_nrRej = document.createTextNode("Nr rejestrancyjny");
+			var nd_nrRej = document.createTextNode("Nr rejestracyjny");
 			nc_nrRej.appendChild(nd_nrRej);
 			document.getElementById("naglu").appendChild(nc_nrRej);
 			
@@ -317,7 +322,7 @@ else
 			document.getElementById("naglu").appendChild(nc_kod);
 			
 			var nc_osoba = document.createElement("TD");
-			var nd_osoba = document.createTextNode("> Osoba udostępniająca samochód");
+			var nd_osoba = document.createTextNode("Osoba udostępniająca samochód");
 			nc_osoba.appendChild(nd_osoba);
 			document.getElementById("naglu").appendChild(nc_osoba);
 			
@@ -388,7 +393,8 @@ else
         var cars = xml.documentElement.getElementsByTagName("car");
 		
 		if (cars.length>0) {
-			document.getElementById('udstKomus').innerHTML = "> Udostępnione innym w ramach ich aboanmentu";
+			document.getElementById('udstKomus').innerHTML = "> Udostępnione innym w ramach ich abonamentu";
+			document.getElementById('udstKomus').style.fontWeight = 'bold';
 			var yy = document.createElement("TR");
 			yy.setAttribute("id", "nagluk");
 			document.getElementById("myCarsToAlienTable").appendChild(yy);
@@ -404,7 +410,7 @@ else
 			document.getElementById("nagluk").appendChild(nc_model);
 			
 			var nc_nrRej = document.createElement("TD");
-			var nd_nrRej = document.createTextNode("Nr rejestrancyjny");
+			var nd_nrRej = document.createTextNode("Nr rejestracyjny");
 			nc_nrRej.appendChild(nd_nrRej);
 			document.getElementById("nagluk").appendChild(nc_nrRej);
 			
@@ -486,7 +492,8 @@ else
         var cars = xml.documentElement.getElementsByTagName("car");
 		
 		if (cars.length>0) {
-			document.getElementById('obcAboMi').innerHTML = "> Udostępnione od innych w ramach ich aboanmentu";
+			document.getElementById('obcAboMi').innerHTML = "> Udostępnione od innych w ramach ich abonamentu";
+			document.getElementById('obcAboMi').style.fontWeight = 'bold';
 			var yy = document.createElement("TR");
 			yy.setAttribute("id", "naglumi");
 			document.getElementById("MyCarsAlienAboTable").appendChild(yy);
@@ -502,7 +509,7 @@ else
 			document.getElementById("naglumi").appendChild(nc_model);
 			
 			var nc_nrRej = document.createElement("TD");
-			var nd_nrRej = document.createTextNode("Nr rejestrancyjny");
+			var nd_nrRej = document.createTextNode("Nr rejestracyjny");
 			nc_nrRej.appendChild(nd_nrRej);
 			document.getElementById("naglumi").appendChild(nc_nrRej);
 			
@@ -574,6 +581,7 @@ else
 		
 		if (cars.length>0) {
 			document.getElementById('mojAboKomus').innerHTML = "> Udostępnienie mojego abonamentu innym";
+			document.getElementById('mojAboKomus').style.fontWeight = 'bold';
 			var yy = document.createElement("TR");
 			yy.setAttribute("id", "naglukom");
 			document.getElementById("AlienCarsMyAboTable").appendChild(yy);
@@ -589,7 +597,7 @@ else
 			document.getElementById("naglukom").appendChild(nc_model);
 			
 			var nc_nrRej = document.createElement("TD");
-			var nd_nrRej = document.createTextNode("Nr rejestrancyjny");
+			var nd_nrRej = document.createTextNode("Nr rejestracyjny");
 			nc_nrRej.appendChild(nd_nrRej);
 			document.getElementById("naglukom").appendChild(nc_nrRej);
 			
@@ -676,7 +684,7 @@ else
       td2.addEventListener('click',function(){
 	    document.getElementById('idSamochod').value = t;
 		document.getElementById('CarToShare').innerHTML = "Wyszukaj osobę, "+
-		"której chcesz usostępnić samochód "+ marka +" " + model + " o nr rej. "+nrRej+", co to "+document.getElementById("idSamochod").value;
+		"której chcesz usostępnić samochód "+ marka +" " + model + " o nr rej. "+nrRej;
 		var stable = document.getElementById('ShareCar');
 		stable.style.display = "table"; 
 		//var mytable = document.getElementById('carsTable');
@@ -707,6 +715,10 @@ else
 	function OnSearchPeopleClick(whichTable) {
 		var table, buttonText;
 		var sname, ssurname;
+		//document.getElementById("onMyAboLabel").style.display = "none";
+		//document.getElementById("onMyAbo").style.display = "none";
+		/*onMyAboLabel
+			onMyAbo*/
 		if (whichTable==1) {
 			table = document.getElementById("People");
 			sname=document.forms[1].imie.value;
@@ -770,8 +782,6 @@ else
 			document.getElementById(idOsoba+"wyb"+whichTable).appendChild(c_button);
 			c_button.setAttribute("id",idOsoba+"op"+whichTable);
 			
-
-			
 			if (whichTable==1) {
 				setChoseButton(idOsoba+"op"+whichTable,idOsoba);
 			}
@@ -805,43 +815,49 @@ else
 		if (typeof window.addEventListener==='function'){
       td.addEventListener('click',function(){
 		
-		var request = window.ActiveXObject ?
+		/*var request = window.ActiveXObject ?
           new ActiveXObject('Microsoft.XMLHTTP') :
-          new XMLHttpRequest;
+          new XMLHttpRequest;*/
+		  
 			document.getElementById('idOsoba').value = idOsoba;
 			
 			choosePerson(function(data){
 				
 			var xml = data.responseXML;
-			//alert(t);
-        //var res = xml.documentElement.getElementsByTagName("result");
+
 		if (xml!=null) {
 			var res = xml.documentElement.getElementsByTagName("result");
 			if (res.length>0) {
 				if (res[0].getAttribute("transsactionResulst")==0) {
-					document.getElementById('BadData').innerHTML = res[0].getAttribute("transsactionResulst");
+					//document.getElementById('BadData').innerHTML = res[0].getAttribute("transsactionResulst");
 			
 					document.getElementById('BadData').innerHTML = '';
-					document.getElementById('CarToShare').innerHTML = "Twój samochód został pomyślnie udostępniony";
-					document.getElementById('People').style.display = "none";
-					document.getElementById('ShareCar').style.display = "none";
-					document.getElementById('carsTable').style.display = "none";//
-					document.getElementById('alienCarsTable').style.display = "none";
+					//document.getElementById('CarToShare').innerHTML = "Twój samochód został pomyślnie udostępniony";
+					document.getElementById('BadDataUdstMyCar').innerHTML = "";
+					document.getElementById('SuccessUdstMyCar').innerHTML = "Twój samochód został pomyślnie udostępniony";
+					//document.getElementById('People').style.display = "none";
+					//document.getElementById('onMyAbo').style.display = "none";
+					
+					//document.getElementById('ShareCar').style.display = "none";
+					//document.getElementById('carsTable').style.display = "none";//
+					//document.getElementById('alienCarsTable').style.display = "none";
 				}
 				else{
-					document.getElementById('BadData').innerHTML = "Błąd wewnętrzny [addCar: "+res[0].getAttribute("transsactionResulst")+"]";
+					document.getElementById('BadDataUdstMyCar').innerHTML = "Błąd wewnętrzny [addCar: "+res[0].getAttribute("transsactionResulst")+"]";
+					document.getElementById('SuccessUdstMyCar').innerHTML = "";
 				}
 			
 			}
 			else
 			{
-				document.getElementById('BadData').innerHTML = "Błąd wewnętrzny. Prawdopodobnie już wykonałeś taka operację";
+				document.getElementById('BadDataUdstMyCar').innerHTML = "Błąd wewnętrzny. Prawdopodobnie już wykonałeś taka operację [empty request]";
+				document.getElementById('SuccessUdstMyCar').innerHTML = "";
 			}
 		}
 		else
 		{
-			document.getElementById('BadData').innerHTML = "Błąd wewnętrzny. Prawdopodobnie już wykonałeś taka operację";
-
+			document.getElementById('BadDataUdstMyCar').innerHTML = "Błąd wewnętrzny. Prawdopodobnie już wykonałeś taka operację [xml is Null]";
+			document.getElementById('SuccessUdstMyCar').innerHTML = "";
 		}
 			
 		document.getElementById('idOsoba').value = "";
@@ -859,15 +875,24 @@ else
       var request = window.ActiveXObject ?
           new ActiveXObject('Microsoft.XMLHTTP') :
           new XMLHttpRequest;
-		  //alert(" l");
+		  
       request.onreadystatechange = function() {
         if (request.readyState == 4) {
           request.onreadystatechange = doNothing;
           callback(request, request.status);
         }
       };
-	  //document.getElementById('idSamochod').innerHTML
-	  	request.open("GET","choosePerson.php?aboOwner="+1+"&car="+document.getElementById('idSamochod').value+"&person="+document.getElementById('idOsoba').value,true);
+	  
+	  if (document.getElementById('onMyAbo').checked ) { //Mój abonament
+		request.open("GET","choosePerson.php?aboOwner="+0+"&car="+document.getElementById('idSamochod').value+"&person="+document.getElementById('idOsoba').value,true);
+		
+	  }
+	  else{
+		request.open("GET","choosePerson.php?aboOwner="+1+"&car="+document.getElementById('idSamochod').value+"&person="+document.getElementById('idOsoba').value,true);
+		
+	  }
+	  	/*request.open("GET","choosePerson.php?aboOwner="+1+"&car="+document.getElementById('idSamochod').value+"&person="+document.getElementById('idOsoba').value,true);
+		*/
 		request.send(null);
 
 	}
@@ -905,7 +930,7 @@ else
 			document.getElementById("nagl2").appendChild(nc_model);
 			
 			var nc_nrRej = document.createElement("TD");
-			var nd_nrRej = document.createTextNode("Nr rejestrancyjny");
+			var nd_nrRej = document.createTextNode("Nr rejestracyjny");
 			nc_nrRej.appendChild(nd_nrRej);
 			document.getElementById("nagl2").appendChild(nc_nrRej);
 			
@@ -1013,10 +1038,10 @@ else
 			var res = xml.documentElement.getElementsByTagName("result");
 			if (res.length>0) {
 				if (res[0].getAttribute("transsactionResulst")==0) {
-					document.getElementById('BadData').innerHTML = res[0].getAttribute("transsactionResulst");
+					//document.getElementById('BadData').innerHTML = res[0].getAttribute("transsactionResulst");
 			
 					document.getElementById('BadData').innerHTML = '';
-					document.getElementById('AboShareLabelOK').innerHTML = "Samochód osoby został pomyślnie udostępniony w ramach Twojego abonamentu";
+					document.getElementById('AboShareLabelOK').innerHTML = "Twój abonament został pomyślnie udostępniony na wskazany samochód danej osoby";
 					document.getElementById('AboShareLabel').innerHTML = "";
 					/*document.getElementById('People').style.display = "none";
 					document.getElementById('ShareCar').style.display = "none";
@@ -1025,17 +1050,19 @@ else
 				}
 				else{
 					document.getElementById('AboShareLabel').innerHTML = "Błąd wewnętrzny [addCar: "+res[0].getAttribute("transsactionResulst")+"]";
+					document.getElementById('AboShareLabelOK').innerHTML = "";
 				}
 			
 			}
 			else
 			{
-				document.getElementById('AboShareLabel').innerHTML = "Błąd wewnętrzny. Prawdopodobnie już wykonałeś taka operację";
+				document.getElementById('AboShareLabel').innerHTML = "Błąd wewnętrzny. Prawdopodobnie już wykonałeś taka operację [XML null]";
+				document.getElementById('AboShareLabelOK').innerHTML = "";
 			}
 		}
 		else
 		{
-			document.getElementById('AboShareLabel').innerHTML = "Błąd wewnętrzny. Prawdopodobnie już wykonałeś taką operację";
+			document.getElementById('AboShareLabel').innerHTML = "Błąd wewnętrzny. Prawdopodobnie już wykonałeś taką operację [request null]";
 			document.getElementById('AboShareLabelOK').innerHTML = "";
 		}
 			
@@ -1155,7 +1182,9 @@ else
 			<p style = "color:#FF0000">
 				<label id="BadData" ></label>
 			</p>
+			<p style = "color:#0000ff">
 			<label id="SuccessOnAdd" ></label>
+			</p>
           </form>
 		  <br>
 			<input type="button" value="Moje pojazdy" name = "update2" onclick= "OnMyCarsClick()"/>
@@ -1163,9 +1192,35 @@ else
 				<label id="myauta" ></label>
 			</p>
 		  <table id="carsTable"  width="400" style = "display:none"></table>
+		  
+		  <form name="udostepnij">
+			<p >
+				<label id="CarToShare" ></label>
+			</p>
+			
+			<table id = "ShareCar" style = "display:none">
+				<tr></tr>
+				
+				<tr><td>Imię</td><td>Nazwisko</td></tr>
+				<tr><td><input type="text" name = "imie" size="20"/></td><td><input type="text" name = "nazwisko" size="20"/></td></tr>
+				<td><input type="button" value="Szukaj" name = "search" onclick= "OnSearchPeopleClick(1)"/></td></tr>
+				
+				<tr><td><input type="checkbox" id = "onMyAbo" />Na mój abonament</td></tr>
+			
+				
+			</table>
+			
+		
+		  </form>
+		  <p style = "color:#FF0000"><label id="BadDataUdstMyCar" ></label></p>
+		  <p style = "color:#0000ff"><label id="SuccessUdstMyCar" ></label></p>
+		  <table id="People" style = "display:none"></table>
+		  
 		  <p >
 				<label id="udst" ></label>
 			</p>
+			
+			
 			
 		  <table id="alienCarsTable"  width="400" style = "display:none"></table>
 		  
@@ -1187,26 +1242,13 @@ else
 		  
 		  <input type="hidden" id="meta1" value="">
 		  
-		  <form name="udostepnij">
-			<p >
-				<label id="CarToShare" ></label>
-			</p>
-			
-			<table id = "ShareCar" style = "display:none">
-				<tr><td>Imię</td><td>Nazwisko</td></tr>
-				<tr><td><input type="text" name = "imie" size="20"/></td><td><input type="text" name = "nazwisko" size="20"/></td></tr>
-				<td><input type="button" value="Szukaj" name = "search" onclick= "OnSearchPeopleClick(1)"/></td></tr>
-			</table>
-
-          </form>
 		  
-			<table id="People" style = "display:none"></table>
 			
 			<br>
 			<input type="button" value="Udostępnij w ramach swojego abonamentu" name = "za_swoj" onclick= "OnShowSearchForShareAbo()"/>
 			<form>
 			<table id = "ShareAbo" style = "display:none">
-				<tr><td>Imię2</td><td>Nazwisko</td></tr>
+				<tr><td>Imię</td><td>Nazwisko</td></tr>
 				<tr><td><input type="text" name = "imie2" size="20"/></td><td><input type="text" name = "nazwisko2" size="20"/></td></tr>
 				<td><input type="button" value="Szukaj" name = "searchSB" onclick= "OnSearchPeopleClick(2)" /></td></tr>
 			</table>
@@ -1214,7 +1256,7 @@ else
 			<p style = "color:#FF0000">
 				<label id="AboShareLabel" ></label>
 			</p>
-			<p >
+			<p style = "color:#0000ff">
 				<label id="AboShareLabelOK" ></label>
 			</p>
 			<table id="SahreAbo" style = "display:none">

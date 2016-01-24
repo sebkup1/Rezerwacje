@@ -39,7 +39,7 @@ try {
     throw new Exception($connection->error);
   }
   //mysql_query("ROLLBACK");
-  //mysql_query("START TRANSACTION");
+  mysql_query("START TRANSACTION");
   
   //Dodanie kodu IR
   $generatedCode =  rand ( 1000000, 10000000 );
@@ -98,11 +98,11 @@ try {
   
   //All success - commit transaction
   $newnode->setAttribute("transsactionResulst",0);
-  //mysql_query("COMMIT");
+  mysql_query("COMMIT");
   
 }
 catch( Exception $e ){
-  //mysql_query("ROLLBACK");
+  mysql_query("ROLLBACK");
   //$newnode->setAttribute("transsactionResulst","17");
 }
 

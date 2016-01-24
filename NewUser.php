@@ -253,16 +253,18 @@ if ($errorMessage == "") {
 	  <td>Login: </td> <td>   <INPUT TYPE = 'TEXT' Name ='login'  value="<?PHP print "";?>" maxlength="20">*</td>
    </tr>
    <tr>
-	  <td>Hasło: </td> <td>  <INPUT TYPE = 'TEXT' Name ='password'  value="<?PHP print "";?>" maxlength="16">*</td>
+	  <td>Hasło: </td> <td>  <INPUT TYPE = 'password' Name ='password'  value="<?PHP print "";?>" maxlength="16">*</td>
    </tr>
       <tr>
-	  <td>Potwierdź hasło: </td> <td>  <INPUT TYPE = 'TEXT' Name ='cpassword'  value="<?PHP print "";?>" maxlength="16">*</td>
+	  <td>Potwierdź hasło: </td> <td>  <INPUT TYPE = 'password' Name ='cpassword'  value="<?PHP print "";?>" maxlength="16">*</td>
    </tr>
 
 </table>
-
+<br>* - wymagane pola</br>
 <P>
-<INPUT TYPE = "Submit" Name = "Submit1"  VALUE = "Register">
+<INPUT TYPE = "Submit" Name = "Submit1"  VALUE = "Zarejestruj">
+
+
 
 </FORM>
 <p style = "color:#FF0000"><?PHP print $errorMessage;?></p>

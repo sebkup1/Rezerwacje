@@ -174,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			<td>
 			<INPUT TYPE = 'TEXT' Name ='username'   maxlength="20">
 			<br><br>
-			<INPUT TYPE = 'TEXT' Name ='password'   maxlength="16">
+			<INPUT TYPE = 'password' Name ='password'   maxlength="16">
 			</td>
 			
 		 </table>

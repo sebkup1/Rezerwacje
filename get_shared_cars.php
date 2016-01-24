@@ -2,12 +2,12 @@
 	require("phpsqlajax_dbinfo.php");
     session_start();
 	$user_id = $_SESSION['userId'];
-	if($_GET['scenario']==0){					//ja komuś
+	if($_GET['scenario']==0){					// ja komuś
 		//$user_id = $_GET['idOsoba'];
 		$operator1 = "!=";
 		$operator2 = "=";
 		$wlasciciel = "id_Osoba";
-	}else{										//ktos mi
+	}else{										// ktos mi
 		//$user_id = $_SESSION['userId'];
 		$operator1 = "=";
 		$operator2 = "!=";
