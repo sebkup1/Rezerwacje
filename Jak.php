@@ -42,7 +42,7 @@ else{
 </td>
 </tr>
 <tr>
-<td width="20%">
+<td width="20%" valign = "top">
 
 
 <script type="text/javascript" src="menu.js"></script>
@@ -60,8 +60,45 @@ else{
 <br>
 <br>
 
+
+
 </td>
-<td width="70%"><small>tresc Zakładka2.html</small></td>
+<td width="70%" align = "justify" style ="text-indent: 0.4in;" >
+	<br><br>
+	<table>
+	<td width="95%" valign = "top">
+	<p>	Użytkownik chcący skorzystać z systemu najpierw musi
+	<a href=NewUser.php>zarejestrować się</a> na obecnie przeglądanej stronie internetowej połączoną z bazą danych.
+	Na stronie tej ma on możliwość oprócz rejestracji także <a href=Zaloguj.php>logowanie</a> do sesji.
+	Oprócz tego może <a href=Zarezerwuj.php>rejestrować</a> swój pojazd i uzyskiwać dla niego kod wjazdowy.
+	Użytkownik może z poziomu strony udostępniać swoje pojazdy,
+	a także swój abonament innym użytkownikom poprzez prosty interface.
+	Tam też ma możliwość przeglądania swoich pojazdów oraz tych, 
+	które komuś udostępnił lub zostały udostępnione jemu.
+	</p>
+<p>Centralną częścią systemu jest serwer z bazą danych przechowującą wszystkie powyższe informacje
+oraz zarządzający przepływem danych w systemie. Strona internetowa – interface użytkownika –
+jest jednym z komponentów systemu wymieniających dane z bazą.
+Drugim równie istotnym jest aplikacja pośrednicząca pomiędzy bazą, a platformą E2LP.</p>
+
+<p>Podsystem autoryzacji wjazdu w założeniu składa się z dwóch terminali do wpisywania kodów
+– jeden dla pojazdów wjeżdżających, drugi dla wyjeżdżających.
+Umieszczone są w miejscach umożliwiającym wpisywanie kodów bez konieczności wysiadania z pojazdu.
+Po przekazaniu kodu do platformy E2LP przesyła ona go do aplikacji,
+która określa na podstawie zapytań wysłanych do bazy czy użytkownik ten ma uprawnienia do wjazdu
+na parking (lub wyjazdu) i odsyła informację zwrotną, która wyświetlona zostanie na wyświetlaczu LCD.
+W informacji tej zawarty będzie powód ewentualnego braku zezwolenia na przejazd.
+W przypadku gdy użytkownik chcący wjechać na parking ma do tego uprawnienia podsystem sterowania szlabanem
+otworzy go.
+</p>
+</td>
+
+<td width="5%" valign = "top">
+</td>
+</table>
+
+</td>
+
 <td width="10%" valign = "top">
 	<p><?PHP print $is_logged.' '.$_SESSION['user'];?>
 	<?php
