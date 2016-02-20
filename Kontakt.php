@@ -41,7 +41,7 @@ else{
 </td>
 </tr>
 <tr>
-<td width="20%">
+<td width="20%" valign = "top">
 
 
 <script type="text/javascript" src="menu.js"></script>
@@ -61,7 +61,54 @@ else{
 <br>
 
 </td>
-<td width="70%"><small>tresc Zakładka.html</small></td>
+<td width="70%" valign ="top">
+	<table>
+		<tr>
+			<h3>Autor systemu</h3>
+		</tr>
+		<tr>
+			<td width="22%">
+				<img src = "images/P1012428.JPG" width = "117" height = "150">
+			</td>
+			<td valign = "top" align = "left">
+				<p>
+					Sebastian Kupis
+				</p>
+				<p>
+					Student Wydziału Mechatroniki Politechniki Warszawskiej na kierunku
+					Automatyka i Robotyka o specjalności Informatyka Przemysłowa.
+				</p>
+				<p>
+					adres email: sebkup1@gmail.com
+				</p>
+			</td>
+			<td width = "4%">
+			</td>
+			
+		</tr>
+
+	</table>
+	
+	<table>
+		<tr>
+			<h3>Dziekanat Wydziału Mechatroniki</h3>
+		</tr>
+		<tr>
+			<td width="22%">
+				<a href=http://www.mchtr.pw.edu.pl>
+					<img src = "images/logo_mchtr.png" width = "150" height = "153">
+				</a>
+			</td>
+			<td>
+				Wszelkich dodatkowych informacji udziela jak zwykle kompetentny dziekanat.
+			</td>
+			</td>
+			<td width = "4%">
+			</td>
+		</tr>
+
+	</table>
+</td>
 
 <td width="10%" valign = "top">
 	<p><?PHP print $is_logged.' '.$_SESSION['user'];?>
