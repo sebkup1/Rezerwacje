@@ -136,7 +136,7 @@ if ($errorMessage == "") {
 				   ".$login.",
 				   ".$pword.",
 				   '".$phone."',
-				  '1');";
+				  '2');";
 				  
 			$result = mysql_query($SQL);
 			if(!$result)
@@ -149,6 +149,7 @@ if ($errorMessage == "") {
 			   $_SESSION['login'] = "1";
 			
 			   $_SESSION['user'] = $login;
+			   $_SESSION['status']=2;
 			   
 			   $query = "SELECT LAST_INSERT_ID();";
 			   $result = mysql_query($query);

@@ -1,4 +1,7 @@
 <?php
+	// Turn off all error reporting
+	error_reporting(0);
+	
 	require("phpsqlajax_dbinfo.php");
 	session_start();
 	$user = $_SESSION['userId'];
